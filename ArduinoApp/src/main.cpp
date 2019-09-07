@@ -1,15 +1,21 @@
 #include <Arduino.h>
 #include <Motor.h>
+#include <MPU6050.h>
 
-Motor *motor1;
-Motor *motor2;
+Motor *MotorRight;
+Motor *MotorLeft;
+MPU6050* Mpu6050;
+
 int dela = 2500;
 char buffer = 'S';
 
 void setup()
 {
-  motor1 = new Motor(3, 4);
-  motor2 = new Motor(6, 7);
+  //Initialize motors
+  MotorRight = new Motor(3, 4);
+  MotorLeft = new Motor(6, 7);
+
+  Mpu6050= new MPU6050(0x68);//Initialize Gyro-accelerometer
 
   Serial1.begin(9600); //Begin HC-05 serial communication
   Serial.begin(9600);  //Begina serial port for debugging
@@ -22,20 +28,21 @@ void loop()
   if (Serial1.available() > 0)
     buffer = Serial1.read();
 
+  //Move forward
   if (buffer == 'U')
   {
-    Serial.println("Naprijed");
-    motor1->SetDirection(Clockwise);
-    motor2->SetDirection(CounterClockwise);
-    motor1->MakeStep(dela);
-    motor2->MakeStep(dela);
+    MotorRight->SetDirection(Clockwise);
+    MotorLeft->SetDirection(CounterClockwise);
+    MotorRight->MakeStep(dela);
+    MotorLeft->MakeStep(dela);
   }
 
+  //Move backwards
   if (buffer == 'D')
   {
-    motor1->SetDirection(CounterClockwise);
-    motor2->SetDirection(Clockwise);
-    motor1->MakeStep(dela);
-    motor2->MakeStep(dela);
+    MotorRight->SetDirection(CounterClockwise);
+    MotorLeft->SetDirection(Clockwise);
+    MotorRight->MakeStep(dela);
+    MotorLeft->MakeStep(dela);
   }
 }
