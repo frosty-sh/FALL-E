@@ -14,7 +14,6 @@ void Motor::MakeStep(int Delay)
   digitalWrite(stepPin, HIGH);
   delayMicroseconds(Delay);
   digitalWrite(stepPin, LOW);
-  delayMicroseconds(Delay);
 }
 
 void Motor::SetDirection(Directions Direction)
