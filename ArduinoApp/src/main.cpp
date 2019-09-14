@@ -1,24 +1,14 @@
 #include <Arduino.h>
 #include <Motor.h>
 #include <MPU6050.h>
-#include <SpeedyStepper.h>
 
 MPU6050 *Mpu6050;
 HardwareSerial HC05 = Serial1;
 char Buffer = 'S';
 
-SpeedyStepper MotorLeft;
-SpeedyStepper MotorRight;
+Motor MotorLeft;
+Motor MotorRight;
 int maxSpeed;
-
-void MoveBoth()
-{
-  while ((!MotorLeft.motionComplete()) || (!MotorRight.motionComplete()))
-  {
-    MotorLeft.processMovement();
-    MotorRight.processMovement();
-  }
-}
 
 void setup()
 {
@@ -26,12 +16,11 @@ void setup()
   MotorLeft.connectToPins(50, 51);
   MotorRight.connectToPins(52, 53);
   //Set speed
-  maxSpeed = 2800;
-  MotorLeft.setSpeedInStepsPerSecond(maxSpeed);
-  MotorRight.setSpeedInStepsPerSecond(maxSpeed);
+  MotorLeft.setSpeed(3500);
+  MotorRight.setSpeed(3500);
   //Set acceleration
-  MotorLeft.setAccelerationInStepsPerSecondPerSecond(17500);
-  MotorRight.setAccelerationInStepsPerSecondPerSecond(17500);
+  MotorLeft.setAcceleration(17500);
+  MotorRight.setAcceleration(17500);
 
   //Initialize Gyro-accelerometer
   Mpu6050 = new MPU6050(0x68);
@@ -58,29 +47,29 @@ void loop()
     {
     case 'R':
     {
-      MotorRight.setupRelativeMoveInSteps(-maxSpeed);
-      MotorLeft.setupRelativeMoveInSteps(-maxSpeed);
+      MotorRight.setupMove(CounterClockwise);
+      MotorLeft.setupMove(CounterClockwise);
       break;
     }
 
     case 'U':
     {
-      MotorRight.setupRelativeMoveInSteps(-maxSpeed);
-      MotorLeft.setupRelativeMoveInSteps(maxSpeed);
+      MotorRight.setupMove(CounterClockwise);
+      MotorLeft.setupMove(Clockwise);
       break;
     }
 
     case 'D':
     {
-      MotorRight.setupRelativeMoveInSteps(maxSpeed);
-      MotorLeft.setupRelativeMoveInSteps(-maxSpeed);
+      MotorRight.setupMove(Clockwise);
+      MotorLeft.setupMove(CounterClockwise);
       break;
     }
 
     case 'L':
     {
-      MotorRight.setupRelativeMoveInSteps(maxSpeed);
-      MotorLeft.setupRelativeMoveInSteps(maxSpeed);
+      MotorRight.setupMove(Clockwise);
+      MotorLeft.setupMove(Clockwise);
       break;
     }
 
@@ -88,23 +77,15 @@ void loop()
       break;
     }
 
-    bool IsStopped = false;
-
     while ((!MotorLeft.motionComplete()) || (!MotorRight.motionComplete()))
     {
       //Make step
       MotorLeft.processMovement();
       MotorRight.processMovement();
 
-      //Keep moving if the mottor is stopping or hasn't reached max velocity
-      if (IsStopped || (abs(MotorLeft.getCurrentVelocityInStepsPerSecond()) != maxSpeed && abs(MotorRight.getCurrentVelocityInStepsPerSecond() != abs(maxSpeed))))
-        continue;
-
       //Read serial for stop signal
       if (Serial1.available() > 0 && Serial1.read() == 'S')
       {
-        IsStopped = true;
-
         //Start decelerating motors
         MotorLeft.setupStop();
         MotorRight.setupStop();
@@ -112,10 +93,6 @@ void loop()
         Buffer = 'S';
         continue;
       }
-
-      //Keep moving motors while no stop signal is recieved
-      MotorRight.setCurrentPositionInSteps(0);
-      MotorLeft.setCurrentPositionInSteps(0);
     }
 
     //Clear buffer
