@@ -1,36 +1,63 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass[12pt,a4paper]{article}
 \usepackage{graphicx}
 \usepackage{multicol}
+% \usepackage[showframe]{geometry}
+\usepackage{geometry}
+\usepackage{layout}
+\usepackage{titlesec}
+\usepackage{hyperref}
+% \usepackage{subfiles}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
+\usepackage{tocloft}
 
+%Title and author
+\title{Samobalansirajući Robot}
+\author{Adi Šoše}
+
+%Margins
+\geometry{textwidth=470pt, headheight=0pt, textheight=700pt}
+
+%Image paths
+\graphicspath{{Images/}{../Images/}}
+
+%Hyperlinks
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black,
+    linktoc=all
+}
+
+%TOC dots
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+%New page after section
+\let\oldsection\section
+\renewcommand\section{\clearpage\oldsection}
+    
+    
 \begin{document}
-\begin{titlepage}
-	\centering
-	\includegraphics[width=0.15\textwidth]{Images/Logo_UNMO.png}\par
-	\vspace{1cm}
-	{\scshape\LARGE Univerzitet "Džemal Bijedić" \par}
-	{\scshape\Large Fakultet Informacijskih Tehnologija \par}
+\pagenumbering{gobble}
 
-	\vspace{2.5cm}
-	{\scshape\Large Završni rad\par}
-	\vspace{0.7cm}
+\import{Sections/}{Naslovna}
 
-	{\huge\bfseries Samobalansirajući robot\par}
-	\vspace{0.5cm}
-	elektronički bazirani projekat za održavanje robota na dva točka uspravnim\par
+\import{Sections/}{Izjava}
+\pagebreak
 
-	\vfill
+\setcounter{page}{1}
+\renewcommand*\contentsname{Sadržaj}
+\tableofcontents
 
-	\textbf{Profesor:}
-	\hfill
-	\textbf{{Student:}}\par
-	Doc.dr. Elmir Babović
-	\hfill
-	Adi Šoše, IB160034\par
+\pagebreak
+\pagenumbering{arabic}
 
-	\vspace{1cm}
-	Akademska godina: 2019/2019\par
-	\vspace{0.3cm}
-	Mostar, 2019. godina
+%Beginning of the document
 
-\end{titlepage}
+\import{Sections/}{Sazetak}
+\import{Sections/}{Uvod}
+\import{Sections/}{Android}
+
 \end{document}
