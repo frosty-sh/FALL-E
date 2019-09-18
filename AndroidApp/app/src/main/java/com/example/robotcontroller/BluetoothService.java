@@ -48,7 +48,6 @@ public class BluetoothService {
         }
 
         final String address = "98:D3:32:30:AD:C2";
-        final String name = "RobotBT";
 
         // Spawn a new thread to avoid blocking the GUI
         new Thread() {
@@ -132,8 +131,8 @@ public class BluetoothService {
             // member stream is final
             try {
                 tmpOut = socket.getOutputStream();
-            } catch (IOException e) {
             }
+            catch (IOException e) {}
 
             __outStream = tmpOut;
         }
@@ -142,16 +141,16 @@ public class BluetoothService {
             byte[] bytes = input.getBytes();//converts entered String into bytes
             try {
                 __outStream.write(bytes);
-            } catch (IOException e) {
             }
+            catch (IOException e) {}
         }
 
         /* Closes the connection */
         public void cancel() {
             try {
                 __socket.close();
-            } catch (IOException e) {
             }
+            catch (IOException e) {}
         }
     }
 
