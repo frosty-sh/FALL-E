@@ -13,7 +13,7 @@ Piconet je ad hoc mreža koja povezuje 2 ili više uređaja povezanih pomoću bl
 \vspace{1cm}
 \cFigure{HC-05_Piconet}{Piconet}{0.6}
 
-\subsection{Scatternet}
+\subsubsection{Scatternet}
 Scatternet je mreža koja se sastoji od 2 ili više piconeta. Kako bi ovo bilo moguće, jedan slave uređaj mora biti povezan na 2 master uređaja, ili se master uređaj iz jedne mreže ponaša kao slave uređaj druge.
 \cFigure{HC-05_Scatternet}{Piconet}{0.8}
 
@@ -121,8 +121,8 @@ Nakon što na Arduino pošaljemo ovu skicu, kroz Serial Monitor možemo slati ko
         AT+NAME?                          & Ime uređaja                               \\\hline
         AT+RNAME?<Param>                  & Ime bluetooth uređaja na osnovu adrese    \\\hline
         AT+ROLE=<Param>                   & 0-Slave, 1-Master, 2-Slave-Loop           \\\hline
-        AT+PSWD=<Param>                   & Postavljanje lozinke                         \\\hline
-        AT+PSWD?                   & Trenutna lozinka                          \\\hline
+        AT+PSWD=<Param>                   & Postavljanje lozinke                      \\\hline
+        AT+PSWD?                          & Trenutna lozinka                          \\\hline
         AT+UART=<Param>,<Param2>,<Param3> & Postavlja baud rate, Stop bit i Parivost  \\\hline
         AT+UART?                          & Baud rate, Stop bit i Parivost            \\\hline
         AT+CMODE=<Param>                  & 0-konekcija na fiksnu adresu 1-sve adrese \\\hline
@@ -132,11 +132,11 @@ Nakon što na Arduino pošaljemo ovu skicu, kroz Serial Monitor možemo slati ko
         AT+BIND?                          & Trenutna fiksirana adresa za konekciju    \\\hline
         AT+PMSAD=<Param>                  & Brisanje autentificiranog uređaja         \\\hline
         AT+ RMAAD                         & Brisanje svih autentificiranih uređaja    \\\hline
-        AT+FSAD=<Param>                         & Pretraga autentificiranog  uređaja    \\\hline
-        AT+ADCN?                         & Broj autentificiranih uređaja    \\\hline
-        AT+MRAD?                         & Posljednji autentificirani uređaj \\\hline
-        AT+LINK=<Param>                         & Povezivanje s uređajem \\\hline
-        AT+DISC                         & Prekid veze \\\hline
+        AT+FSAD=<Param>                   & Pretraga autentificiranog  uređaja        \\\hline
+        AT+ADCN?                          & Broj autentificiranih uređaja             \\\hline
+        AT+MRAD?                          & Posljednji autentificirani uređaj         \\\hline
+        AT+LINK=<Param>                   & Povezivanje s uređajem                    \\\hline
+        AT+DISC                           & Prekid veze                               \\\hline
     \end{tabular}
     \caption{Tabela AT komandi}
     \def\arraystretch{1}
