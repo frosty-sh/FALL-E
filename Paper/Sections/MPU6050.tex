@@ -4,4 +4,191 @@
 \begin{document}
 \section{MPU6050}
 
+MPU6050 je uređaj za praćenje kretanja i orijentacije tijela na kojem se nalazi. Kombinacijom žiroskopa i akcelerometra, sa po tri ose, zajedno sa Digital Motion Processor-om daje vrlo precizne podatke o trenutnom položaju uređaja.
+
+\subsection{Žiroskop}
+Žiroskop je uređaj koji koristeći zemljinu gravitaciju oderđuje svoju orijentaciju. Sastavljen je od diska koji se vrti (rotora), koji se nalazi na osovini, na kojoj se tako]er nalaze tri stacionarna prstena. Kada se orijentacija promijeni, zahvaljujući svojoj rotacionoj sili, rotor ostaje u istom orijentacionom odnosu sa zemljom, što omogućava očitavanje pomjeranja u odnosu na stacionarni dio uređaja oko žiroskopa.
+
+\cFigure{MPU6050_Ziroskop}{Žiroskop}{0.7}
+
+\subsection{Akcelerometar}
+Akcelerometar je mjerni instrument pomoću kojeg se mjeri promjena u brzini kretanja tijela. Mjerenjem inercijske sile, koja djeluje na referentnu masu u akcelerometru, prema drugom Newtonovom zakonu se može izračunati ubrzanje.
+
+$$
+    \centering
+    a = \frac{F}{m}
+$$
+
+\noindent Zbog ovoga će akcelerometar koji je u mirnom stanju očitavati ubrzanje od 9.81m/s$^2$, a akcelerometar koji pada 0m/s$^2$.
+
+\subsection{Digital Motion Processing}
+
+Digital Motion Processor (DMP) je interni proceseor, koji se nalazi na MPU6050. Nažalost, ovaj procesor je zatvorenog koda i nije dokumentovan. Zbog toga se u Arduino projektima koristi biblioteka ``I2Cdevlib''\footnote{https://www.i2cdevlib.com/} koja je nstala kao proces reverznog inžinjeringa, biblioteke koja preuzima podatke iz DMP-a
+
+\subsubsection{Euluerovi uglovi}
+Eulerovi uglovi se koriste kako bi se predstavila orijentacija tijela u odnosu na fiksirani koordinatni sistem. Ovom metodom se utvrđuje rotacija tijela sa osama $x,y,z$ u tijelo $X,Y,Z$.Prvo je potrebno odrediti N-osu, koja se dobija vektorskim proizvodom $N=Z \times Z$. Zatim se definišu uglovi:
+
+\begin{itemize}
+    \item $\alpha$ kao ugao između x-ose i N-ose
+    \item $\beta$ kao ugao između z-ose i Z-ose
+    \item $\gamma$ kao ugao između X-ose i N-ose
+\end{itemize}
+
+\cFigure{MPU6050_Eulerovi-Uglovi}{Primjer Eulerovih uglova na rotaciji x,y,z $\rightarrow$X,Y,Z}{0.3}
+
+\subparagraph{Problemi} koji se pojavljuju kod ovog pristupa rotaciji tijela su:
+
+\begin{itemize}
+    \item Svaku orijentaciju nije moguće predstaviti koristeći samo jednu jednačinu
+    \item Tzv. ``Gimbal lock'' je problem koji nastaje kada ugao između bilo koje dvije ose postane 0\textdegree čime se gubi jedan stepen slobode koji rotacija ima.
+\end{itemize}
+
+\subsubsection{Kvaternioni}
+Kvaternioni su numerički sistem koji proširuje kompleksne brojeve. Sastavljeni su od imaginarnog i realnog dijela.
+
+$$
+    a+b\mathbf{i}+c\mathbf{j}+d\mathbf{k}
+$$
+
+\noindent U jednačini iznad, a, b, c i d predstavljaju realne brojeve, dok su i, j i k imaginarni.
+
+\noindent Pravila koja vrijede za množenje imaginarnih dijelova su:
+
+\begin{align*}
+    ij=k  \\
+    ji=-k \\
+    jk=i  \\
+    kj=-i \\
+    ki=j  \\
+    ji=-k
+\end{align*}
+
+\cFigure{MPU6050_Kvaternion}{Grafički prikaz proizvoda imaginarnih dijelova i i j}{0.5}
+
+\paragraph{Konjugacija}
+Konjugacija kvaterniona se vrši promjenom predznaka imaginarnom dijelu
+
+\begin{align*}
+    q=a + bi + cj + dk \\
+    q*=a - bi - cj - dk
+\end{align*}
+
+\paragraph{Tenzor}
+Tenzor kvaterniona se dobija formulom:
+
+\begin{align*}
+    ||q||=\sqrt{a^2 + b^2 + c^2 + d^2}
+\end{align*}
+
+\paragraph{Inverzija}
+Inverzni kvaternion se dobija formulom:
+
+\begin{align*}
+    q^{-1}=\frac{q*}{|q|^2}
+\end{align*}
+
+\paragraph{Rotacija}
+Najćešća upotreba kvaterniona jeste opisivanje rotacije. Rotacija tačke p, kvaternionom koji opicuje rotaciju q se može riješiti formulomČ
+
+$$p'=qpq^{-1}$$
+
+\noindent Prednost ove rotacije u odnosu na Eulerovu, ili matričnu je ta što imaginarni dio onemogućava gubljenje stepena slobode, kao i to što svaka rotacija može biti opisana jednim kvaternionom rotacije.
+
+\newcommand{\itc}{I\textsuperscript{2}C}
+\subsection{\itc}
+{\itc} je serijski komunikacijski protokol zasnovan na master/slave modelu. U ovom modelu, jedan ili više master uređaja, mogu kontrolirati jedan ili više slave uređaja. Podaci se prenose kroz dvije putanje:
+
+\begin{itemize}
+    \item SDA (Serial Data) - kroz ovu putanju se šalju komunikacijski paketi
+    \item SCL (Serial Clock) - putanja koja prenosi signal sata
+\end{itemize}
+
+\noindent Podaci se kroz SDA prenose bit po bit, koji su sinkronizirani sa SCL signalima, kontrolisanim od strane master uređaja. Maksimalan broj slave uređaja za jedan master uređaj je 1008, dok je u obrnutoj direkciji maksimalan broj teoretski beskonačan.
+
+\subsubsection{Paketi}
+Komunikacija ovog protokola se zasniva na slanju paketa. Veličina mu nije fiksna, već se dinamički,pomoću početnog i stop signala, određuju početak i kraj mrežnog paketa. Konstrukciju jednog paketa čini 9 okvirova(6 tipova okvira):
+
+\begin{itemize}
+    \item Početni signal - na SDA putanji se prebacuje sa visoke voltažne vrijednosti, na nisku, prije nego što se na SCL učini isto.
+    \item Adresni okvir - identificira slave uređaj sa kojim master želi komunicirati (7-10 bita)
+    \item Bit primanja ili slanja - Visoka voltažna vrijednost u ovom trenutku označava da matser uređaj od ovog trenutka šalje podatke odabranom slave uređaju, dok niska označava da će početi proces primanja podataka.(1 bit)
+    \item ACK/NACK - Nakon svakog okvira se šalje ACK poruka sa informacijom pošiljaocu, da li je njegova poruka uspješno primljena(1 bit)
+    \item Okvir sa podacima (8 bit)
+    \item Stop signal - proces obrnut početnov uslovu gdje se prebacuje na visoku voltažnu vrijednost
+\end{itemize}
+
+
+\paragraph{Okvir sa podacima} se šalje nakon što master uređaj dobije pozitivan ACK frame od slave uređaja. Nakon svakog poslanog podatkovnog okvira, trenutačno se prema master uređaju šalje ACK/NACK okvir, od strane slave uređaja čija se adresa nalazi u asresnom okvriu.\\
+
+\cFigure{MPU6050_I2C-Paket}{Primjer \itc paketa}{1}
+
+\noindent Brzina ove komunikacije može biti između 100kbps i 5Mbps.\\
+
+\noindent Najveća mana ovog protokola je ograničenje okvirnog podatka na 8 bita.
+
+\subsection{Specifikacije}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ |c|c| }
+        \hline
+        Potrebna struja         & 3V-5V     \\
+        \hline
+        Komunikacijski protokol & \itc      \\
+        \hline
+        Dužina                  & 21.2mm    \\
+        \hline
+        Širina                  & do 16.4mm \\
+        \hline
+    \end{tabular}
+    \caption{MPU6050 specifikacije}
+\end{table}
+
+\subsubsection{Pinovi}
+
+\begin{itemize}
+    \item VCC - ulaz za struju
+    \item GND - uzemljenje
+    \item SCL - serijski sat
+    \item SDA - serijska putanja podataka
+    \item XCL - pomoćni sat, koristi se za konekciju na serijski sat drugih I2C uređaja
+    \item XDA - pomoćna putanja podataka, koristi se za konekciju na serisjku putanju podataka drugih I2C uređaja
+    \item AD0 - slave adresa uređaja, ovaj pin određuje nulti bit 7 bit-ne adrese i kada je na njemu visoki stepen voltaže, mijenja adresu uređaja postavivši nulti bit na 1
+    \item INT - digitalni pin koji se koristi za prekide.
+\end{itemize}
+
+\cFigure{MPU6050_Pins}{Raspored pinova na MPU6050}{0.58}
+
+\subsection{I2Cdevlib}
+I2Cdevlib je biblioteka napisana u C++ programskom jeziku koja olakšava korištenje MPU6050 u Arduino projektima. Neke od funkcija koje ova biblioteka nudi su:
+
+\subparagraph{Initialize()} \noindent postavlja čip u stanje koje je spremno za očitavanje. Ova funkcija postavlja brzinu sata na SCL-u.
+
+\subparagraph{dmpInitialize()} \noindent vrši manipulaciju registara kojom se dmp čip stavlja u funkciju kao i inicijalizacija FIFO buffera, koji čuva podatke prije nego što budu poslati kroz SDA.
+
+\subparagraph{Set[X | Y | Z][Gyro | Accel]Offset()} \noindent Postavlja pomak orijentacije uređaja nastalih, zbog grešaka u proizvodnji i nesavršene pozicije uređaja na tijelu.
+
+\subparagraph{Calibrate[Gyro | Accel]Offset(n)} \noindent Vrši kalibraciju žiroskopa i akcelerometra tako da trenutna pozicija bude nulta za oboje. Broj n predstavlja koliko puta će se ponoviti kalibracija prije uzimanja srednje vrijednosti.
+
+\subparagraph{getIntStatus()} \noindent Vraća informaciju o tome da li trenutno postoji signal za prekid koji je došao od MPU6050 uređajai.
+
+\subparagraph{dmpGetFIFOPacketSize()} \noindent Vraća veličinu paketa koja se nalazi u FIFO bufferu.
+
+\subparagraph{getFIFOCount()} \noindent Vraća broj bita koji se nalazi u FIFO bufferu.
+
+\subparagraph{getFIFOBytes(packet, size)} \noindent Upisuje size veličinu paketa iz FIFO buffera u packet varijablu.
+
+\subparagraph{dmpGetQuaternion(\&q, packet)} \noindent pretvara podatke iz paketa packet u kvaternion rotacije i pohranjuje ih u objekt tipa quaternion q.
+
+\subparagraph{mpu.dmpGetEuler(euler, \&q)} \noindent Vrši konverziju kvaterniona rotacije q u Eulerove uglove koje pohranjuje u niz od 3 float varijable euler($\alpha,\beta,\gamma$).
+
+
+
+
+
+
+
+
+
+
 \end{document}
