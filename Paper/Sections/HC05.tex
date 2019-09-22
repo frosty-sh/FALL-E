@@ -2,7 +2,7 @@
 \documentclass[../Document.tex]{subfiles}
 
 \begin{document}
-\section{HC05}
+\section{HC05}\label{hc}
 Pošto će se robotom moći upravljati pomoću Android aplikacije koja šalje bluetooth pakete, mora biti osiguran način da ti paketi budu prihvaćeni od strane mikrokontrolera. To je u projektu postignuto koristeći bluetooth modul pod nazivom ``HC-05''. Obzirom da je malih dimenzija i zanemarljive težine, HC-05 neće imati značajan utjecaj na sposobnost robota da se balansira.
 
 \subsection{Tehnologije}
@@ -85,7 +85,7 @@ HC-05 ukupno ima 6 pinova.
 \cFigure{HC-05_Shema}{HC-05 Šema}{0.4}
 \newpage
 
-\subsection{AT komande}
+\subsection{AT komande} \label{hcat}
 Kada pri paljenju modula, držimo dugme na njemu pritisnutim, na pin PIO11 spajama struju. Ovo će uređaj pokrenuti u komandnom načinu rada. Kroz RX se sada neće prihvatati podaci koji će se slati kroz antenu, već komande koje će konfigurisati uređaj. Te komande se nazivaju AT komande.\\
 
 Kako bi mogli poslati ove komande uređaju, moramo se povezati na njega. To možemo učiniti koristeći Arduino "Serial Passtrough" skicu.\\
@@ -105,8 +105,8 @@ Kako bi mogli poslati ove komande uređaju, moramo se povezati na njega. To mož
                 Serial.write(Serial1.read());
                 }
             \end{minted}
-            \caption{Serial passthrough}
-        \end{code}
+    \caption{Serial passthrough}
+\end{code}
 
 Nakon što na Arduino pošaljemo ovu skicu, kroz Serial Monitor možemo slati komande direktno na HC-05.
 

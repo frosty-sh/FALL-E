@@ -2,7 +2,7 @@
 \documentclass[../Document.tex]{subfiles}
 
 \begin{document}
-\section{MPU6050}
+\section{MPU6050} \label{mpu}
 
 MPU6050 je uređaj za praćenje kretanja i orijentacije tijela na kojem se nalazi. Kombinacijom žiroskopa i akcelerometra, sa po tri ose, zajedno sa Digital Motion Processor-om daje vrlo precizne podatke o trenutnom položaju uređaja.
 
@@ -21,7 +21,7 @@ $$
 
 \noindent Zbog ovoga će akcelerometar koji je u mirnom stanju očitavati ubrzanje od 9.81m/s$^2$, a akcelerometar koji pada 0m/s$^2$.
 
-\subsection{Digital Motion Processing}
+\subsection{Digital Motion Processing}\label{dmp}
 
 Digital Motion Processor (DMP) je interni proceseor, koji se nalazi na MPU6050. Nažalost, ovaj procesor je zatvorenog koda i nije dokumentovan. Zbog toga se u Arduino projektima koristi biblioteka ``I2Cdevlib''\footnote{https://www.i2cdevlib.com/} koja je nstala kao proces reverznog inžinjeringa, biblioteke koja preuzima podatke iz DMP-a
 
@@ -94,7 +94,7 @@ $$p'=qpq^{-1}$$
 
 \noindent Prednost ove rotacije u odnosu na Eulerovu, ili matričnu je ta što imaginarni dio onemogućava gubljenje stepena slobode, kao i to što svaka rotacija može biti opisana jednim kvaternionom rotacije.
 
-\newcommand{\itc}{I\textsuperscript{2}C}
+\newcommand{\itc}{I\textsuperscript{2}C}\label{itc}
 \subsection{\itc}
 {\itc} je serijski komunikacijski protokol zasnovan na master/slave modelu. U ovom modelu, jedan ili više master uređaja, mogu kontrolirati jedan ili više slave uređaja. Podaci se prenose kroz dvije putanje:
 
@@ -144,7 +144,7 @@ Komunikacija ovog protokola se zasniva na slanju paketa. Veličina mu nije fiksn
     \caption{MPU6050 specifikacije}
 \end{table}
 
-\subsubsection{Pinovi}
+\subsubsection{Pinovi}\label{mpupins}
 
 \begin{itemize}
     \item VCC - ulaz za struju
@@ -159,7 +159,7 @@ Komunikacija ovog protokola se zasniva na slanju paketa. Veličina mu nije fiksn
 
 \cFigure{MPU6050_Pins}{Raspored pinova na MPU6050}{0.58}
 
-\subsection{I2Cdevlib}
+\subsection{I2Cdevlib} \label{itclib}
 I2Cdevlib je biblioteka napisana u C++ programskom jeziku koja olakšava korištenje MPU6050 u Arduino projektima. Neke od funkcija koje ova biblioteka nudi su:
 
 \subparagraph{Initialize()} \noindent postavlja čip u stanje koje je spremno za očitavanje. Ova funkcija postavlja brzinu sata na SCL-u.

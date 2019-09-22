@@ -96,7 +96,7 @@ S obzirom na to da će aplikacija sa robotom komunicirati putem bluetooth veze, 
 
 \paragraph{BluetoothAdapter} je objekat koji se nalazi u statičkoj memoriji, u kodu ga je moguće dobiti koristeći \verb|BluetoothAdapter.getDefaultAdapter()|. Adapter posjeduje funkciju \verb|enable| koja će na uređaju upaliti bluetooth, ukoliko već nije upaljen.
 
-\paragraph{BluetoothDevice} je tip objekta koji sadrži informacije o uređaju sa kojim želimo komunicirati, objekat uređaja možemo dobiti iz BluetoothAdapter-a na osnovu njegove MAC adrese, koristeći \verb|getRemote| funkciju.
+\paragraph{BluetoothDevice} \label{btdev}je tip objekta koji sadrži informacije o uređaju sa kojim želimo komunicirati, objekat uređaja možemo dobiti iz BluetoothAdapter-a na osnovu njegove MAC adrese, koristeći \verb|getRemote| funkciju.
 
 \paragraph{BluetoothSocket} je objekat koji predstavlja konekciju sa drugim uređajem. Pozivajući funkciju \verb|createInsecureRfcommSocketToServiceRecord| nad objektom uređaja, kao rezultat ćemo dobiti BluetoothSocket objekat, nakon čega je potrebno pozvati \verb|connect| funkciju na socket objektom kako bi se veza između uređaja mogla uspostaviti. Svaki socket ima dva stream-a podataka, input i output stream. Iz input streama je moguće čitati podatke koji dolaze na adapter, dok se u output stream upisuju podaci koje želimo poslati povezaonm uređaju.
 

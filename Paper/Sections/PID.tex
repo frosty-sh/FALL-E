@@ -2,7 +2,7 @@
 \documentclass[../Document.tex]{subfiles}
 
 \begin{document}
-\section{PID kontroler}
+\section{PID kontroler} \label{pid}
 PID kontroler je kontrolna petlja, čiji zadatak je da primijeni preciznu i vremenski prihvatljivu korekciju kontrolnoj funkciji. To postiže računajući vrijednost greške, kao razliku ulazne i ciljane vrijednosti, uzevši u obzir proporcionalni, integralni i derivativni dio.\\
 
 \noindent Ukoliko iz jednačine izostavimo neki od dijelova PID-a, onda tu jednačinu oslovljavamo nazivom koji u sebi također ne sadrži taj dio.
@@ -59,7 +59,7 @@ $$
 
 \cFigure{PID_Idealan}{Graf PID kontrolera}{0.6}
 
-\subsection{Podešavanje parametara}
+\subsection{Podešavanje parametara} \label{tuning}
 Jedan od najvećih problema sa kojim se dizajneri PID kontrolera susreću jeste podešavanje parametara.\\
 
 \noindent Ručno podešavanje paramtara je metoda koja se započinje tako što se $K_i$ i $K_d$ inicijalno postave na 0. Nakon toga, $K_p$ je potrebno povećavati sve dok petlja ne počne oscilirati. Vrijednost $K_p$ bi trebala biti podešena na jednu polovinu vrijednosti.

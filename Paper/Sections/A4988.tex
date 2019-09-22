@@ -2,7 +2,7 @@
 \documentclass[../Document.tex]{subfiles}
 
 \begin{document}
-\section{A4988}
+\section{A4988} \label{acdoo}
 Upravljač motora A4988 je namijenjen za upravljanje bipolarnim koračnim motorima. Pomoću ovog uređaja, motoru motožemo dostaviti i do 2A po namotaju. Međutim, za jačinu struje se ne moramo previše brinuti, jer A4988 ima ugrađenu zaštitu od prekomjerne struje (eng. overcurrent protection).
 
 \subsection{Digitalno-analogni konverter}
@@ -30,12 +30,12 @@ H-most ima dva moda u kojima prekidači mogu biti postavljeni, a to su brzo i sp
 \subsection{Miješano propadanje}
 U svakom koraku motora, protok struje se kontrolira koristeći vrijednost eksternih rezistora čija je uloga opažati ulazni protok struje, referentnu voltažu, i izlaznu voltažu digitalno-analognog konvertera, koja se kontroliše od strane translatora. Ukoliko je trenutni izlaz DAC-a, u odnosu na prošli niži, onda se mod aktivnog mosta postavlja na mod miješanog propadanja (jedno od svojstava A4988 čipa). Ukoliko je trenutni izlaz DAC-a viši, postavlja se na sporo propadanje. Ovo dinamično mijenjanje modova poboljšava performanse motora u vidu smanjenja distorzije talasa koji prenosi signal.
 
-\subsection{Pinovi}
+\subsection{Pinovi} \label{apinovi}
 A4988 upravljač, na sebi ima 16 pinova:
 
 \subparagraph{ENABLE} \noindent se koristi za privremeno isključenje uređaja, kada se na njemu nalazi visoki nivo voltaže, uređaj neće primati naredbe.
 
-\subparagraph{MS1, MS2, MS3} \noindent su pinovi koji određuju rezoluciju mikrokoračanja motora. Stavljenjem visokog voltažnog nivoa po zadanom šablonu će upravljač prebaciti na drugi mikrokoračni mod.
+\subparagraph{MS1, MS2, MS3} \noindent su pinovi koji određuju rezoluciju mikrokoračanja motora. Stavljenjem visokog voltažnog nivoa po zadanom šablonu će upravljač prebaciti na drugi mikrokoračni mod. \label{microstepping}
 
 
 \begin{table}[h]
@@ -66,7 +66,7 @@ A4988 upravljač, na sebi ima 16 pinova:
 
 \subparagraph{DIR} \noindent služi za određivanje smjera u kojem će se osa motora okretati. Ovaj pin mora konstantno imati na sebe pušten nivo voltaže gdje visoki i niski određuju smjer.
 
-\subparagraph{VMOT} \noindent je ulaz za struju kojom će se napajati motor. Voltaža ove struje treba biti između 8V i 35V.
+\subparagraph{VMOT}\label{a4988pow} \noindent je ulaz za struju kojom će se napajati motor. Voltaža ove struje treba biti između 8V i 35V.
 
 \subparagraph{VDD} \noindent predstavlja zvor struje za upravljač.
 
