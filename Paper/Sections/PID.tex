@@ -3,7 +3,7 @@
 
 \begin{document}
 \section{PID kontroler} \label{pid}
-PID kontroler je kontrolna petlja, čiji zadatak je da primijeni preciznu i vremenski prihvatljivu korekciju kontrolnoj funkciji. To postiže računajući vrijednost greške, kao razliku ulazne i ciljane vrijednosti, uzevši u obzir proporcionalni, integralni i derivativni dio.\\
+PID kontroler je kontrolna petlja čiji zadatak je da primijeni preciznu i vremenski prihvatljivu korekciju kontrolnoj funkciji. To postiže računajući vrijednost greške kao razliku ulazne i ciljane vrijednosti, uzevši u obzir proporcionalni, integralni i derivativni dio.\\
 
 \noindent Ukoliko iz jednačine izostavimo neki od dijelova PID-a, onda tu jednačinu oslovljavamo nazivom koji u sebi također ne sadrži taj dio.
 \\
@@ -13,13 +13,13 @@ $$
     e(t) = r(t) - y(t)
 $$
 \subsection{Proporcionalni dio}
-Proporcionalni dio PID kontrolera ima sopstvenu izlaznu vrijednost u uzajamnom odnosu sa greškom. To znači da će se u P kontroleru, primjenjujući izlaznu vrijednost na pokretač, greška proporcionalno smanjivati. Kada se greška smanji na 0, tada će i izlaz biti 0
+Proporcionalni dio PID kontrolera ima sopstvenu izlaznu vrijednost u uzajamnom odnosu sa greškom. To znači da će se u P kontroleru, primjenjujući izlaznu vrijednost na pokretač, greška proporcionalno smanjivati. Kada se greška smanji na 0, tada će i izlaz biti 0.
 
 $$
     P=K_p*e(t)
 $$
 
-\noindent Ovaj dio, u teoriji zvuči korisnije nego što jeste, zbog toga što u stvarnom svijetu, nije optimalno prestati sa primijenjivanjem ispravljačke sile u trenutku kada je ona 0 (npr. tijelo koje ima inerciju, grijač koji nastavlja grijati i kad se ugasi).
+\noindent Ovaj dio, u teoriji zvuči korisnije nego što jeste, zbog toga što, u stvarnom svijetu, nije optimalno prestati sa primijenjivanjem ispravljačke sile u trenutku kada je ona 0 (npr. tijelo koje ima inerciju, grijač koji nastavlja grijati i kad se ugasi).
 
 \cFigure{PID_P}{Graf P kontrolera}{0.6}
 
@@ -30,18 +30,18 @@ $$
     I=K_i*\int_{0}^{t}e(t')dt'
 $$
 
-\noindent Kada se greška smanjuje, usporava se rast integranlog dijela, ovo rezultuje približavanjem proporcionalnog dijela 0 što se kompenzuje greškom akumuliranom u integralnom dijelu.
+\noindent Kada se greška smanjuje, usporava se rast integranlog dijela. Ovo rezultuje približavanjem proporcionalnog dijela 0 što se kompenzuje greškom akumuliranom u integralnom dijelu.
 
 \cFigure{PID_PI}{Graf PI kontrolera}{0.6}
 
 \subsection{Derivativni dio}
-Derivativni dio za zadatak ima da predvidi trend smanjenja greške u idućem koraku, koristeći razliku između trenutne i prošle greške. Mjereći koliko brzo se greška u procesu mijenja, nastoji istu eliminisati.
+Derivativni dio za zadatak ima da predvidi trend smanjenja greške u idućem koraku koristeći razliku između trenutne i prošle greške. Mjereći koliko brzo se greška u procesu mijenja, nastoji istu eliminisati.
 
 $$
     D=K_d*\frac{de(t)}{dt}
 $$
 
-\noindent Uređaji koji generišu ulaz za PID često imaju šum, derivativni dio također kao svoj zadatak ima da eliminiše grešku koja nastaje ovim šumom. Pomoću derivativnog dijela, nastaje tzv. prigušenje koje onemogućuje prelijetanje.
+\noindent Uređaji koji generišu ulaz za PID često imaju šum. Derivativni dio također kao svoj zadatak ima da eliminiše grešku koja nastaje ovim šumom. Pomoću derivativnog dijela, nastaje tzv. prigušenje koje onemogućuje prelijetanje.
 \clearpage
 
 \subsection{PID}
@@ -66,11 +66,11 @@ Jedan od najvećih problema sa kojim se dizajneri PID kontrolera susreću jeste 
 
 \cFigure{PID_Kp}{efekt $K_p$ parametra na izlaz}{0.5}
 
-\noindent Kada je vrijednost $K_p$ postavljena, prelazi se na podešavanje $K_i$ parametra. Potrebno je parametar povećavati sve dok se svaki pomak ne može korektovati u najmanjem vremenu neophodno kako bi sistem nastavio raditi. Previše $K_i$ vrijednosti dovodi sistem u nestabilno stanje
+\noindent Kada je vrijednost $K_p$ postavljena, prelazi se na podešavanje $K_i$ parametra. Potrebno je parametar povećavati sve dok se svaki pomak ne može korektovati u najmanjem vremenu neophodno kako bi sistem nastavio raditi. Previše $K_i$ vrijednosti dovodi sistem u nestabilno stanje.
 
 \cFigure{PID_Ki}{efekt $K_i$ parametra na izlaz}{0.5}
 
-\noindent Ukoliko je potrebno, $K_d$ treba povećavati dok se vrijeme osciliranje ne smanji na minimum. Brzi sistemi obično imaju podešen ovaj parametar tako da dolazi do malog prelijeetanja kako bi se sistem prije doveo u stanje balansa. Neki sistemi nemaju toleranciju na prelijetanje pa se ova metoda ne može primijeniti.
+\noindent Ukoliko je potrebno, $K_d$ treba povećavati dok se vrijeme osciliranje ne smanji na minimum. Brzi sistemi obično imaju podešen ovaj parametar tako da dolazi do malog prelijetanja kako bi se sistem prije doveo u stanje balansa. Neki sistemi nemaju toleranciju na prelijetanje pa se ova metoda ne može primijeniti.
 
 \cFigure{PID_Kd}{efekt $K_d$ parametra na izlaz}{0.5}
 
@@ -86,7 +86,7 @@ Integralni zamah (eng. Integral windup) je problem koji nastaje kada pokretač n
 \end{itemize}
 
 \subsubsection{Deadband}
-Modifikacija PID kontrolera koja se naziva dedadband, znači određivanje zone PID izlaza za koji se isti pretvara u nulu. Ovo se koristi kod sistema koji ne trebaju da reaguju na jako male promjene, tj. kada u sistemu dolazi do kvarova nastalih trenjem.
+Modifikacija PID kontrolera koja se naziva dedadband znači određivanje zone PID izlaza za koji se isti pretvara u nulu. Ovo se koristi kod sistema koji ne trebaju da reaguju na jako male promjene, tj. kada u sistemu dolazi do kvarova nastalih trenjem.
 
 
 \end{document}

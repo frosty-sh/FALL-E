@@ -3,25 +3,25 @@
 
 \begin{document}
 \section{HC05}\label{hc}
-Pošto će se robotom moći upravljati pomoću Android aplikacije koja šalje bluetooth pakete, mora biti osiguran način da ti paketi budu prihvaćeni od strane mikrokontrolera. To je u projektu postignuto koristeći bluetooth modul pod nazivom ``HC-05''. Obzirom da je malih dimenzija i zanemarljive težine, HC-05 neće imati značajan utjecaj na sposobnost robota da se balansira.
+Obzirom da će se robotom moći upravljati pomoću Android aplikacije koja šalje bluetooth pakete, moramo osigurati način da ti paketi budu prihvaćeni od strane mikrokontrolera. To je u projektu postignuto koristeći bluetooth modul pod nazivom ``HC-05''. Obzirom da je malih dimenzija i zanemarljive težine, HC-05 neće imati značajan utjecaj na sposobnost robota da se balansira.
 
 \subsection{Tehnologije}
 Prije nego što pređem na temu samih specifikacija uređaja, posvetit ću nekoliko paragrafa tehnologijama na kojima se rad modula zasniva.
 
 \subsubsection{Piconet}
-Piconet je ad hoc mreža koja povezuje 2 ili više uređaja povezanih pomoću bluetooth protokola, koji imaju usklađen sat kao i sekvencu skoka. To omogućava \textit{master} uređaju da bude povezan na 7 aktivnih, i do 255 neaktivnih \textit{slave} uređaja. Zbog toga što bluetooth sistemi rade na 79 kanala, šansa da dođe do interferencije dva piconeta je oko 1.5\%.
+Piconet je ad hoc mreža koja povezuje 2 ili više uređaja povezanih pomoću bluetooth protokola koji imaju usklađen sat, kao i sekvencu skoka. To omogućava \textit{master} uređaju da bude povezan na 7 aktivnih i do 255 neaktivnih \textit{slave} uređaja. Zbog toga što bluetooth sistemi rade na 79 kanala, šansa da dođe do interferencije dva piconeta je oko 1.5\%.
 \vspace{1cm}
 \cFigure{HC-05_Piconet}{Piconet}{0.6}
 
 \subsubsection{Scatternet}
-Scatternet je mreža koja se sastoji od 2 ili više piconeta. Kako bi ovo bilo moguće, jedan slave uređaj mora biti povezan na 2 master uređaja, ili se master uređaj iz jedne mreže ponaša kao slave uređaj druge.
+Scatternet je mreža koja se sastoji od 2 ili više piconeta. Kako bi ovo bilo moguće, jedan slave uređaj mora biti povezan na 2 master uređaja ili se master uređaj iz jedne mreže ponaša kao slave uređaj druge.
 \cFigure{HC-05_Scatternet}{Piconet}{0.8}
 
 \subsubsection{Adaptive Frequency Hopping}
-Skokovi u frekvenciji su neizbježna karakteristika bluetooth uređaja. Zbog toga što su bluetooth uređaji stalno u pokretu (mobiteli, satovi, slušalice, zvučnici itd.), mora postojati način da se izbjegne interferencija između ovih uređaja. Adaptive Frequency Hopping nastoji riješiti ovaj problem, mijenjajući frekvenciju na kojoj bluetooth uređaj radi. Što se tiče adaptivnosti, taj dio naziva proizlazi iz činjenice da uređaj prvo skenira kanale, tražeći kanal sa najmanje prometa.
+Skokovi u frekvenciji su neizbježna karakteristika bluetooth uređaja. Zbog toga što su bluetooth uređaji stalno u pokretu (mobiteli, satovi, slušalice, zvučnici itd.), mora postojati način da se izbjegne interferencija između ovih uređaja. Adaptive Frequency Hopping nastoji riješiti ovaj problem, mijenjajući frekvenciju na kojoj bluetooth uređaj radi. Što se tiče adaptivnosti, taj dio naziva proizlazi iz činjenice da uređaj prvo skenira kanale tražeći kanal sa najmanje prometa.
 
 \subsubsection{Phase Shift Keying}
-Phase-shift keying (PSK) je metoda digitalne komunikacije u kojoj se faza transmitovanog signala mijenja, čime prenosi informaciju. Ovo je moguće postići sa nekoliko metoda, od kojih je najjednostavnija binarni PSK koji koristi dvije suprotne faze od 0\textdegree i 180\textdegree (slika \ref{BPSK}). U ovoj metodi, stanje svakog bita se poredi sa prethodnim i te se tako na osnovu njihove (ne)jednakosti mijenja trenutni bit ili ostavlja istim. Postoje i kompleksnije metode koje uključuju faze od +90\textdegree, -90\textdegree, ili čak i polovine svih dosadašnjih uglova.
+Phase-shift keying (PSK) je metoda digitalne komunikacije u kojoj se faza transmitovanog signala mijenja, čime prenosi informaciju. Ovo je moguće postići sa nekoliko metoda, od kojih je najjednostavnija binarni PSK koji koristi dvije suprotne faze od 0\textdegree i 180\textdegree (slika \ref{BPSK}). U ovoj metodi, stanje svakog bita se poredi sa prethodnim te se tako na osnovu njihove (ne)jednakosti mijenja trenutni bit ili ostavlja istim. Postoje i kompleksnije metode koje uključuju faze od +90\textdegree, -90\textdegree, ili čak i polovine svih dosadašnjih uglova.
 \cFigure{HC-05_BPSK}{Binarni PSK\label{BPSK}}{0.8}
 
 \subsubsection{Enhanced Data Rate}
@@ -32,7 +32,7 @@ Ovaj čip ima implementiran bluetooth 2.0 + EDR. Na sebi ima 8 Mbit flash memori
 
 
 \subsection{Specifikacije}
-HC-05 na sebi ima BlueCore4 eksterni čip, i na njemu se zasniva rad modula. Sa time dolazi i kompletna podrška za sve tehnologije koje čip podržava. Pored BlueCore4 mogućnosti, HC-05 podržava Adaptive Frequency Hopping čime se osigurava stabilnost komunikacije. Na sebi ima radio transiver koji radi na 2.4GHz. U mrežama se može ponašati kao master i slave uređaj. S obzirom da je domet uređaja i do 10 metara, broj scenarija u kojem može biti koristan za komunikaciju je velik.
+HC-05 na sebi ima BlueCore4 eksterni čip i na njemu se zasniva rad modula. Sa time dolazi i kompletna podrška za sve tehnologije koje čip podržava. Pored BlueCore4 mogućnosti, HC-05 podržava Adaptive Frequency Hopping čime se osigurava stabilnost komunikacije. Na sebi ima radio transiver koji radi na 2.4GHz. U mrežama se može ponašati kao master i slave uređaj. S obzirom da je domet uređaja i do 10 metara, broj scenarija u kojem može biti koristan za komunikaciju je velik.
 
 \vspace{1cm}
 \begin{table}[h]
@@ -75,10 +75,10 @@ HC-05 na sebi ima BlueCore4 eksterni čip, i na njemu se zasniva rad modula. Sa 
 \subsection{Pinovi}
 HC-05 ukupno ima 6 pinova.
 \begin{itemize}
-    \item\textbf{GND} se spaja na uzemljenje.
-    \item\textbf{5 VCC} je pin pomoću kojeg se struja (5V) dovodi u modul.
-    \item\textbf{RX} prima bitove koji će biti poslati uređaju na koji je modul spojen
-    \item\textbf{TX} je putanja kroz koju se vrši transmisija bitova koji su primljeni od strane uređaju.
+    \item\textbf{GND} se spaja na uzemljenje
+    \item\textbf{5 VCC} je pin pomoću kojeg se struja (5V) dovodi u modul
+    \item\textbf{RX} prima bitove koji će biti poslani uređaju na koji je modul spojen
+    \item\textbf{TX} je putanja kroz koju se vrši transmisija bitova koji su primljeni od strane uređaja
     \item\textbf{STATE} pin štalje podatke o trenutnom stanju uređaja (Upaljen, ugašen, konektovan, diskonektovan itd.)
     \item\textbf{ENALBE} pin isključuje uređaj kada je na njega upućena struja od 3.3V
 \end{itemize}
@@ -86,7 +86,7 @@ HC-05 ukupno ima 6 pinova.
 \newpage
 
 \subsection{AT komande} \label{hcat}
-Kada pri paljenju modula, držimo dugme na njemu pritisnutim, na pin PIO11 spajama struju. Ovo će uređaj pokrenuti u komandnom načinu rada. Kroz RX se sada neće prihvatati podaci koji će se slati kroz antenu, već komande koje će konfigurisati uređaj. Te komande se nazivaju AT komande.\\
+Kada pri paljenju modula, držimo dugme na njemu pritisnutim, na pin PIO11 spajamo struju. Ovo će uređaj pokrenuti u komandnom načinu rada. Kroz RX se sada neće prihvatati podaci koji će se slati kroz antenu, već komande koje će konfigurisati uređaj. Te komande se nazivaju AT komande.\\
 
 Kako bi mogli poslati ove komande uređaju, moramo se povezati na njega. To možemo učiniti koristeći Arduino "Serial Passtrough" skicu.\\
 
@@ -115,8 +115,8 @@ Nakon što na Arduino pošaljemo ovu skicu, kroz Serial Monitor možemo slati ko
     \centering
     \begin{tabular}{ |c|c| }
         \hline
-        AT                                & Test komanad                              \\\hline
-        AT+RESET                          & Reset uređaka                             \\\hline
+        AT                                & Test komanda                              \\\hline
+        AT+RESET                          & Reset uređaja                             \\\hline
         AT+VERSION?                       & Firmware verzija                          \\\hline
         AT+ORGL                           & Vraćanje na fabričke postavke             \\\hline
         AT+ADDR?                          & MAC Adresa uređaja                        \\\hline
@@ -131,7 +131,6 @@ Nakon što na Arduino pošaljemo ovu skicu, kroz Serial Monitor možemo slati ko
         AT+CMODE=<Param>                  & 0-konekcija na fiksnu adresu 1-sve adrese \\\hline
         AT+CMODE?                         & Trenutni način rada                       \\\hline
         AT+BIND=<Param>                   & Postavlja fiksiranu adresu za konekciju   \\\hline
-        AT+BIND?                          & Trenutna fiksirana adresa za konekciju    \\\hline
         AT+BIND?                          & Trenutna fiksirana adresa za konekciju    \\\hline
         AT+PMSAD=<Param>                  & Brisanje autentificiranog uređaja         \\\hline
         AT+ RMAAD                         & Brisanje svih autentificiranih uređaja    \\\hline

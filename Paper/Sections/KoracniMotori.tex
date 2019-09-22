@@ -3,10 +3,10 @@
 
 \begin{document}
 \section{Koračni motori}
-Koračni motori su tip DC elektronskog motora bez četkica. Revoluciju dijele u jednake korake otkud i dolazi njihov naziv. Ovi motori zbog toga mogu biti precizno pomjereni, i zadržani na željenoj poziciji bez enkodera pozicije.
+Koračni motori su tip DC elektronskog motora bez četkica. Revoluciju dijele u jednake korake odakle i dolazi njihov naziv. Ovi motori zbog toga mogu biti precizno pomjereni i zadržani na željenoj poziciji bez enkodera pozicije.
 \vspace{0.5cm}
 \subsection{Elektromagneti}
-Elektromagneti su tipovi magneta, koji svoja magneta svojstva pokazuju kada kroz njih teče elktrična struja. Jedno od svojstava protoka struje kroz provodnik je magnetno polje koje se stvara oko provodnika. Ovo svojstvo se može multiplicirati zavijanjem izoliranog provodnika u spiralu oko provodničkog jezgra. Za razliku od trajnih magneta, magnetna svojstva ovih uređaja mogu biti aktivirana po potrebi.\\
+Elektromagneti su tipovi magneta koji svoja magneta svojstva pokazuju kada kroz njih teče elktrična struja. Jedno od svojstava protoka struje kroz provodnik je magnetno polje koje se stvara oko provodnika. Ovo svojstvo se može multiplicirati zavijanjem izoliranog provodnika u spiralu oko provodničkog jezgra. Za razliku od trajnih magneta, magnetna svojstva ovih uređaja mogu biti aktivirana po potrebi.\\
 
 \begin{figure}[h]
     \centering
@@ -16,7 +16,7 @@ Elektromagneti su tipovi magneta, koji svoja magneta svojstva pokazuju kada kroz
 \end{figure}
 
 \subsection{Proces rotacije ose}
-Koračni motori su građeni iz okvira, koji čine elektromagneti i jezgra, koje čini željezni zupčanik, koji je ujedno i trajni magnet. Ovi magneti su najčešće kontrolisani od strane mikrokontrolera ili upravljač koji nije dio samog motora. Kako bi se osovina motora rotirala, potrebno je pustiti protok struje kroz jedan elektromagnet. Nakon što se povučen magnetnom silom, zupčanik fiksira na poziciju, paljenjem drugog elektromagneta se postiže rotacija ose motora na željenu poziciju. Ova rotacija predstavlja koncept koraka, gdje prirodni broj N koraka čini jednu revoluciju osovine motora.
+Koračni motori su građeni iz okvira koji čine elektromagneti i jezgra - željeznog zupčanika, što je ujedno i trajni magnet. Ovi magneti su najčešće kontrolisani od strane mikrokontrolera ili upravljača koji nije dio samog motora. Kako bi se osovina motora rotirala, potrebno je pustiti protok struje kroz jedan elektromagnet. Nakon što se povučen magnetnom silom zupčanik fiksira na poziciju, te se paljenjem drugog elektromagneta postiže rotacija ose motora na željenu poziciju. Ova rotacija predstavlja koncept koraka gdje prirodni broj N koraka čini jednu revoluciju osovine motora.
 
 \subsection{Tipovi}
 Postoje dva tipa koračnih motora:
@@ -29,7 +29,7 @@ Postoje dva tipa koračnih motora:
 
 \cFigure{Stepper-Motor_Bipolarni}{Šema bipolarnog motora}{0.35}
 
-\noindent Prednost bipolarnih motora je veća vučna sila i jače magnetno polje, a unipolarnih je manji troškovi, zbog jednostavnije kontrole, kao i manji otpor.
+\noindent Prednost bipolarnih motora je veća vučna sila i jače magnetno polje, a kodunipolarnih su to manji troškovi zbog jednostavnije kontrole, kao i manji otpor.
 
 \subsection{Načini upravljanja}
 U praksi postoje 4 načina upravljanja koračnim motorima
@@ -48,6 +48,6 @@ U praksi postoje 4 načina upravljanja koračnim motorima
 \subparagraph{Mikrokoračanje} je metoda u kojoj se sinusnom i kosinusnom funkcijom kreiraju faze. Ovo znatno smanjuje broj koraka u jednoj revoluciji, čime se povećava rezolucija samog motora. U ovim situacijama, ograničenje broja koraka u revoluciji postoji zbog statičkog trenja i zazora.
 \cFigure{Stepper-Motor_Mikrokorak}{Mikrokoračanje}{1}
 
-\noindent Kako bi se postigle veće brzine kretanja motora, potrebna je akceleracija, koja će motor dovesti do pune brzine. U primjeni sam također zapazio da se deakceleracijom pri promjeni smjera postiže bolji rezultat pri promjeni smjera kretanja.
+\noindent Kako bi se postigle veće brzine kretanja motora, potrebna je akceleracija koja će motor dovesti do pune brzine. U primjeni sam također zapazio da se deakceleracijom pri promjeni smjera postiže bolji rezultat kod promjeni smjera kretanja.
 
 \end{document}
