@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         Buttons.add((ImageButton) findViewById(R.id.Right));
 
         for (ImageButton button : Buttons)
-        {
             button.setOnTouchListener(new View.OnTouchListener() {
 
                 @Override
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }
 
     //Sends a bluetooth signal
     public void SendSignal (char Direction){
