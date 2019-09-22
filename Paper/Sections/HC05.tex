@@ -90,20 +90,23 @@ Kada pri paljenju modula, držimo dugme na njemu pritisnutim, na pin PIO11 spaja
 
 Kako bi mogli poslati ove komande uređaju, moramo se povezati na njega. To možemo učiniti koristeći Arduino "Serial Passtrough" skicu.\\
 
-\begin{minted}{cpp}
-void setup() {
-  Serial.begin(9600); // Interna softverska serijska komunikacija
-  Serial1.begin(38400); // Komunikacija sa HC-05
-}
-
-void loop() {
-  if (Serial.available())
-    Serial1.write(Serial.read());
-
-  if (Serial1.available())
-    Serial.write(Serial1.read());
-}
-\end{minted}
+\begin{code}
+    \begin{minted}{cpp}
+        void setup() {
+            Serial.begin(9600); // Interna softverska serijska komunikacija
+            Serial1.begin(38400); // Komunikacija sa HC-05
+            }
+            
+            void loop() {
+                if (Serial.available())
+                Serial1.write(Serial.read());
+                
+                if (Serial1.available())
+                Serial.write(Serial1.read());
+                }
+            \end{minted}
+            \caption{Serial passthrough}
+        \end{code}
 
 Nakon što na Arduino pošaljemo ovu skicu, kroz Serial Monitor možemo slati komande direktno na HC-05.
 
