@@ -3,4 +3,167 @@
 
 \begin{document}
 \section{Android aplikacija}
+U ovom dijelu će biti opisana Android aplikacija, koja je dio samog projekta samobalansirajućeg robota.
+
+\subsection{Dizajn}
+Pošto će se robot moći kretati u 2 smjera, i rotirati, također u 2 smjera, mobilnu aplikaciju će činiti 4 dugmeta, smještena na sredini ekrana.
+
+\cFigure{Android_Dizajn}{Dizajn mobilne aplikacije u Adobe XD}{0.4}
+
+\noindent Dugmići inicijalno imaju postavljenu providnost na 50\%, a 100\% samo dok su pritisnuti.
+
+\subsubsection{GridLayout}
+Kako bi dizajn bio responsivan i proporcije ostale jednake na većim i manjim ekranima, korišten je GridLayout. Kada se širina layout-a postavi na \verb|match_parent|, mreža će zauzeti širinu uređaja. U ovom slučaju nam je potrebno 3 kolone i 3 reda
+
+\begin{table}[h]
+    \centering
+    \def\arraystretch{2}
+    \begin{tabular}{ |c|c|c| }
+        \hline
+        Kolona 0, Red 0 & Kolona 1, Red 0 & Kolona 2, Red 0 \\
+        \hline
+        Kolona 0, Red 1 & Kolona 1, Red 1 & Kolona 2, Red 1 \\
+        \hline
+        Kolona 0, Red 2 & Kolona 1, Red 2 & Kolona 2, Red 2 \\
+        \hline
+    \end{tabular}
+    \caption{Izgled 3x3 GridLayout-a}
+\end{table}
+
+\begin{code}
+    \begin{minted}{xml}
+        <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="3">
+        <!-- Sadržaj GridLayout-a -->
+        </GridLayout>
+    \end{minted}
+    \caption{GridLayout}
+\end{code}
+
+\subsubsection{ImageButton}
+ImageButton je zapravo obično dugme, kojeg umjesto okvira i teksta u njemu, vizuelno predstavlja slika. Kako bi napravio dizajnirani izgled, u odgovarajuće kolone i redove sam postavio ImageButton-e koji će služiti kao dugmad za upravljanje robotom.
+
+\cFigure{Android_Dugmici}{ImageButton-i unutar GridLayout-a}{0.5}
+
+\begin{code}
+    \begin{minted}{xml}
+        <ImageButton
+        android:id="@+id/Right"
+        android:layout_row="1"
+        android:layout_column="2"
+        android:rotation="-90"
+        style="@style/DirectionButton"/>
+    \end{minted}
+    \caption{ImageButton za dugme "Desno"}
+\end{code}
+
+\vspace{0.5cm}
+\noindent Stil za ImageButton je definisan u \verb|style.xml| datoteci. Rotacije slike se može postići postavljanjem atributa rotation iz imenskog prostora "android". Transparentnost se postavlja atributom alpha, također iz imenskog prostora "android". \verb|"Res/drawable"| je putanja direktorija u kojem se nalaze datoteke slika, koje se zatim mogu referencirati iz xml datoteke i postaviti kao slika ImageButtona, background atributom. Atribut gravity postavlja dugme u središte ćelije GirdLayout-a.\\
+
+\begin{code}
+    \begin{minted}[breaklines]{xml}
+    <style name="DirectionButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:textColor">#00FF00</item>
+        <item name="android:background"> @drawable/ic_arrow_drop_down_circle_black_24dp</item>
+        <item name="android:alpha">0.5</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+    \end{minted}
+    \caption{Still ImageButton-a}
+\end{code}
+
+\subsection{Kod}
+Pri programiranju Android aplikacija, kod se može pisati u Java ili Kotlin programskom jeziku. Ja sam za izradu ove aplikacije odlučio koristiti Java jezik.
+
+\subsubsection{Bluetooth servis}
+S obzirom na to da će aplikacija sa robotom komunicirati putem bluetooth veze, potrebno je prvo uspostaviti konekciju,a zatim slati podatke putem iste. Kako bi se koristio bluetooth adapter uređaja, potrebno je,u AndroidManifest.xml datoteci, dodati opciju za zahtjevanje permisija pri prvom pokretanju aplikacije.
+
+\begin{code}
+    \begin{minted}[breaklines]{xml}
+    <uses-feature android:name="android.hardware.bluetooth" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    \end{minted}
+    \caption{Zahtjevanje permisija za korištenje bluetooth-a}
+\end{code}
+
+\paragraph{BluetoothAdapter} je objekat koji se nalazi u statičkoj memoriji, u kodu ga je moguće dobiti koristeći \verb|BluetoothAdapter.getDefaultAdapter()|. Adapter posjeduje funkciju \verb|enable| koja će na uređaju upaliti bluetooth, ukoliko već nije upaljen.
+
+\paragraph{BluetoothDevice} je tip objekta koji sadrži informacije o uređaju sa kojim želimo komunicirati, objekat uređaja možemo dobiti iz BluetoothAdapter-a na osnovu njegove MAC adrese, koristeći \verb|getRemote| funkciju.
+
+\paragraph{BluetoothSocket} je objekat koji predstavlja konekciju sa drugim uređajem. Pozivajući funkciju \verb|createInsecureRfcommSocketToServiceRecord| nad objektom uređaja, kao rezultat ćemo dobiti BluetoothSocket objekat, nakon čega je potrebno pozvati \verb|connect| funkciju na socket objektom kako bi se veza između uređaja mogla uspostaviti. Svaki socket ima dva stream-a podataka, input i output stream. Iz input streama je moguće čitati podatke koji dolaze na adapter, dok se u output stream upisuju podaci koje želimo poslati povezaonm uređaju.
+
+\paragraph{ConnectionThread} je klasa koju sam napravio kako bih razdvojio bluetooth funkcionalnosti od UI threada. Kako bih ovo uradio, bilo je potrebno da moja klasa naslijedi Thrad roditeljsku klasu. U konstruktoru kao parametar, ova klasa pirma BluetoothSocket, čiji outputstream onda smješta u svoju privatnu varijablu. Funkcija kojom se šalju podaci, write, na osnovu String inputa, generiše niz byte-ova i koristeći \verb|write| nad socket objektom, poruku šalje povezanom uređaju.
+
+\subsubsection{MainActivity}
+Aktivnost koja se pokreće pri praljenju aplikacije se naziva "MainActivity". Obzirom da je Java objekto orijentiran programski jezik, aktivnost je javna klasa koja nasljeđuje "AppCompatActivity" klasu.
+
+\begin{code}
+    \begin{minted}[breaklines]{java}
+    private char _currentSignal;
+    private BluetoothService _bluetoothSerivce;
+    
+    public void SendSignal (char Direction){
+        if(_currentSignal==Direction)
+            return;
+    
+        _bluetoothSerivce.Send(Character.toString((Direction)));
+        _currentSignal = Direction;
+    }
+    \end{minted}
+    \caption{SendSignal funkcija u MainActivity klasi}
+\end{code}
+
+\paragraph{onCreate} je funkcija za koju se očekuje da će biti override-ana od strane programera. Ona se poziva svakiu put kada se aktivnost kreira. Prvo što se treba uraditi unutar onCreate funkcije jeste odabir layout-a koji koristi ova aktivnost pomoću setContentView funkcije.
+
+\paragraph{findViewById(id)} je funkcija koja vraća view objekat na osnovu njegovog id-a koji je postavljen unutar \verb|xml| datoteke.
+
+\paragraph{Eventi}  su objekti koji nastaju kada se desi promjena na korisničkom sučelju. Eventima se mogu dodijeliti funkcije koje će se izvršiti kada se event dogodi. Ovi tipovi objekata se najčešće koriste zajedno sa eventListener objektima kojima se odabranim elementima korisničkog sučelja, pridodaju pojedini eventi. Kada se aktivira listener, unutar funkcije se može pristupiti dva objekta, view sa kojim je izvršena interakcija, i tip eventa koji se dogodio. \verb|setOnTouchListener| kao tip eventa može imati \verb|MotionEvent.ACTION_UP|, što označava da dugme više nije u pritisnutom stanju.
+
+\begin{code}
+    \begin{minted}[breaklines, tabsize=2]{java}
+    List<ImageButton> Buttons = new ArrayList<>();
+    Buttons.add((ImageButton) findViewById(R.id.Left));
+    Buttons.add((ImageButton) findViewById(R.id.Up));
+    Buttons.add((ImageButton) findViewById(R.id.Down));
+    Buttons.add((ImageButton) findViewById(R.id.Right));
+
+    for (ImageButton button : Buttons)
+    button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                    //Dobavljanje objekta koji je pozvao akciju
+                    ImageButton imgBtn = (ImageButton) v;
+                    //Stavljanje vidljivosti buttona na 100%
+                    imgBtn.setAlpha((float) 1.0);
+
+                    //Dobavljanje id stringa buttona
+                    String id = getResources().getResourceName(v.getId());
+                    int idLocation = id.indexOf('/');
+                    id = id.substring(idLocation +1,idLocation+2);
+
+                    //Slanje signala pomoću bluetootha
+                    SendSignal(id.charAt(0));
+
+                    //Da li je dugme prestalo biti pritisnut?
+                    if(event.getAction() == MotionEvent.ACTION_UP) {
+                            //Varćanje vidljivosti na 50%
+                            imgBtn.setAlpha((float) 0.5);
+                            //Slanje signala za zaustavljanje
+                            SendSignal('S');
+
+                        } return true;}});
+    \end{minted}
+    \caption{Dodjeljivanje event objekata ImageButtonima}
+\end{code}
+
+
 \end{document}

@@ -11,7 +11,7 @@
 % \usepackage{subfiles}
 \usepackage[subpreambles=true]{standalone}
 \usepackage{import}
-\usepackage{minted}
+\usepackage[newfloat]{minted}
 \usepackage{tocloft}
 \usepackage[none]{hyphenat}
 \usepackage{amsmath}
@@ -21,6 +21,7 @@
 \usepackage{gensymb}
 \usepackage{subfig}
 \usepackage{xfrac}
+\usepackage{caption}
 \usepackage{pgfplots}
 \usepackage{hyperref}
 
@@ -71,7 +72,12 @@
 \renewcommand{\tablename}{Tabela}
 
 
+%Code env
+\newenvironment{code}{\captionsetup{type=listing}}{}
+\SetupFloatingEnvironment{listing}{name=Primjer koda}
+
 \begin{document}
+
 
 %Font
 \fontfamily{lmr}\selectfont
