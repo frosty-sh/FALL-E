@@ -11,7 +11,7 @@ Arduino, kao platforma, nije namijenjen za rješenja u produkciji i masovnu proi
 \noindent Obzirom sam kroz razvoj ovog projekta koristio Arduino Mega, sve buduće reference će se odnositi na Mega model.
 
 \subsection{Proces kompajliranja}\label{kompajliranje}
-Programski jezik u kojem se pišu Arduino datoteke koje sadrže izvorni kod je C++. Međutim većina standardnih biblioteka su preuzete iz C programskog jezika, zbog male količine radne memorije kontrolera. Arduino datoteke je moguće prepoznati po njihovoj ``.ino'' eksteniziji. Ove datoteke se još nazivaju i skicama.\\
+Programski jezik u kojem se pišu datoteke koje sadrže Arduino izvorni kod je C++. Međutim većina standardnih biblioteka je preuzeta iz C programskog jezika, zbog male količine radne memorije kontrolera. Arduino datoteke je moguće prepoznati po njihovoj ``.ino'' eksteniziji. Ove datoteke se još nazivaju i skicama.\\
 
 Nakon što se pokrene proces kompajliranja projekta, Arduino okruženje pravi male promjene u kodu, kako bi se nakon toga mogao proslijediti gcc i g++ kompajleru. U ovoj fazi se sve datoteke u direktoriju kombinuju u jednu i na njen početak se dodaje \verb|#Include<Arduino.h>| zaglavlje. Zatim slijedi povezivanje koda sa standardnim Arduino bibliotekama, a nakon toga i sa ostalim bibliotekama uključenim u direktorji skice. Kako bi bila uključena u proces prevođenja, biblioteka (njen .cpp i .h dokument) se mora nalaziti na \verb|libraries\{NazivBiblioteke}| putanji.\\
 
@@ -45,11 +45,11 @@ Arduino posjeduje svoje oficijelno okruženje pod nazivom ``Arduino IDE''. Ono d
 
 \paragraph{Alati}
 
-\subparagraph{Boards manager} je opcija koja se nalazi u alatnoj traci pod stavkom ``Tools''. Koristeći ovaj alat, biramo trenutnu arhitekturu ili model ploče na koju ćemo postaviti kod. S obzirom da je program otvorenog koda, kroz ovaj proces se mogu insatlirati i datoteke koje nisu ugrađene u IDE, s tim da je u tim slučajevima potrebno obratiti pažnju na sigurnost. Na ovaj način moguće je koristiti ovo razvojno okruženje u svrhu pisanja koda i za druge platforme ili klonove Arduino ploča. Iz prozora je moguće preuzeti i instalirati nove ploče, kao i nadograditi već postojeće.
+\subparagraph{Boards manager} je opcija koja se nalazi u alatnoj traci pod stavkom ``Tools''. Koristeći ovaj alat, biramo trenutnu arhitekturu ili model ploče na koju ćemo postaviti kod. S obzirom da je program otvorenog koda, kroz ovaj proces se mogu insatlirati i datoteke koje nisu ugrađene u IDE, s tim da je u tim slučajevima potrebno obratiti pažnju na sigurnost. Na ovaj način moguće je koristiti ovo razvojno okruženje u svrhu pisanja koda i za druge platforme ili klonove Arduino ploča. Unutar alata je moguće preuzeti i instalirati nove ploče, kao i nadograditi već postojeće.
 
 \cFigure{Arduino_Boards-Manager}{Boards manager prozor}{0.7}
 
-\subparagraph{Library manager} je ovaj alat se također nalazi pod stavkom ``Tools''. Arduino IDE već dolazi sa predefinisanim repozitorijem biblioteka koje se nude za preuzimanje i instaliranje. Ukoliko korisnik želi preuzeti biblioteke iz drugih izvora to je moguće uraditi na dva načina: Instalacijom direktno iz ``.zip'' datoteke ili dodavanjem putanje repozitorija u postavkama okruženja. Brisanje se mora raditi ručno na putanji \verb|%HOMEPATH%\Documents\Arduino\libraries|
+\subparagraph{Library manager} - ovaj alat se također nalazi pod stavkom ``Tools''. Arduino IDE već dolazi sa predefinisanim repozitorijem biblioteka koje se nude za preuzimanje i instaliranje. Ukoliko korisnik želi preuzeti biblioteke iz drugih izvora to je moguće uraditi na dva načina: Instalacijom direktno iz ``.zip'' datoteke ili dodavanjem putanje repozitorija u postavkama okruženja. Brisanje biblioteka je nešto komplikovanije jer se mora raditi ručno na putanji \verb|%HOMEPATH%\Documents\Arduino\libraries|.
 
 \cFigure{Arduino_Library-Manager}{Library manager prozor}{0.7}
 
@@ -61,9 +61,9 @@ Arduino posjeduje svoje oficijelno okruženje pod nazivom ``Arduino IDE''. Ono d
 
 Pored Arduino IDE, programerima na izboru stoji još razvojnih okruženja u kojima mogu razvijati svoje Arduino kodove. Jedno od tih okruženja je PlatformIO.\\
 
-PlatformIO se instalira u vidu nadogradnje za Visual Studio Code, koji i sam spada u kategoriju programa otvorenog koda. Kao i Arduino IDE, i ovaj alat nudi izbor ploče koja će se prorgamirati, među kojima je, pored samo Arduina, oko 700 ponuđenih\footnote{https://platformio.org/}. S obzirom da je sada razvojno okruženje Visual Studio Code, to donosi sve njegove prednosti(markiranje sintakse, Intellisense, personalnim postavkama okruženja itd.).\\
+PlatformIO se instalira u vidu nadogradnje za Visual Studio Code, koji i sam spada u kategoriju programa otvorenog koda. Kao i Arduino IDE, i ovaj alat nudi izbor ploče koja će se prorgamirati, među kojima je, pored samog Arduina, oko 700 ponuđenih\footnote{https://platformio.org/}. S obzirom da je sada razvojno okruženje Visual Studio Code, to donosi sve njegove prednosti(markiranje sintakse, Intellisense, personalnim postavkama okruženja itd.).\\
 
-Razlog, pored već navedenih, zbog kojeg sam ja izabrao PlatformIO jeste njegova arhitektura projekta. Naime, u ovoj platformi se koristi standardna arhitektura cpp-a, što je nekome ko dolazi iz tog svijeta, daleko lakše za održavati. Još jedna minorna razlika između ova dva okruženja je to da glavna datoteka sa izvornim kodom u PlatformIO nije .ino, već ``main.cpp'' u kojoj je obavezno uključiti \verb|Arduino.h| biblioteku.
+Razlog, pored već navedenih, zbog kojeg sam ja izabrao PlatformIO jeste njegova arhitektura projekta. Naime, u ovoj platformi se koristi standardna arhitektura cpp-a, što je nekome ko dolazi iz tog svijeta, daleko lakše za održavati. Još jedna minorna razlika između ova dva okruženja je to da glavna datoteka sa izvornim kodom u PlatformIO nije ``.ino'', već ``main.cpp'' u kojoj je obavezno uključiti \verb|Arduino.h| biblioteku.
 
 \subsection{Tipovi varijabli}
 
@@ -76,7 +76,7 @@ Pošto ploča ima ograničenu radnu memoriju, izbor tipova podataka je veoma bit
   \item word (16 bita) - cijeli broj bez predznaka između 0 i 65 535
   \item int (16 bita) - cijeli broj između -32 768 i 32 767
   \item long (32 bita) - cijeli broj između 2 147 483 648 i 2 147 483 647
-  \item unsigned long (32 bita) - cijeli broj između 0 4 294 967 295, bez predznaka.
+  \item unsigned long (32 bita) - cijeli broj između 0 4 i 294 967 295, bez predznaka.
   \item float (32 bita) -  broj sa plutajućom tačkom između -3.4028235E38 i 3.4028235E38
 \end{itemize}
 
@@ -111,7 +111,7 @@ Pošto ploča ima ograničenu radnu memoriju, izbor tipova podataka je veoma bit
 
 \subsection{Funkcije}\label{funkcije}
 
-Ono što omogćava kontrolisanje ulaza i izlaza Arduino ploče jesu funkcije \verb|Arduino.h| biblioteke.
+Ono što omogćava kontrolisanje ulaza i izlaza, kao i upravljenje Arduino pločom jesu funkcije \verb|Arduino.h| biblioteke.
 
 \paragraph{delayMicroseconds(value)} pravi zastoj vremenske dužine value u mikrosekundama.
 
@@ -121,13 +121,15 @@ Ono što omogćava kontrolisanje ulaza i izlaza Arduino ploče jesu funkcije \ve
 
 \paragraph{digitalRead(pin)} očitava trenutno stanje pina čije je ponašanje postavljeno na očitavanje i vraća LOW ili HIGH konstantu u zavisnosti od voltaže koju očitava.
 
-\paragraph{digitalWrite(pin, HIGH | LOW)} postavlja jačinu protoka struje na izlazu pina na visoko ili nisko.
+\paragraph{digitalWrite(pin, HIGH | LOW)} postavlja voltažu struje na izlazu pina na visoko ili nisko.
 
-\paragraph{analogRead(pin)} vraća integer vrijednost između 0 i 1024, koja je direktno proporcionalan jačini struje na pinu.
+\paragraph{analogRead(pin)} vraća integer vrijednost između 0 i 1024, koja je direktno proporcionalan voltaži struje na pinu.
 
-\paragraph{analogWrite(pin, value)} radi modulaciju širine pulsa u što simulira jačinu struje na izlazu pina, pošto analogni izlaz na Arduinu ne postoji. Value ima raspon između 0 i 255 što je proporcionalno prividnoj jačini struje koju će pin proizvesti.
+\paragraph{analogWrite(pin, value)} radi modulaciju širine pulsa u što simulira jačinu struje na izlazu pina, pošto analogni izlaz na Arduinu ne postoji. Value ima raspon između 0 i 255 što je proporcionalno prividnoj voltaži struje koju će pin proizvesti.
 
-\paragraph{Serial.Begin(rate)} inicijalizira serijski protok podataka, gdje je rate brzina prenosa podataka u bitima po sekundi.
+\cFigure{Arduino_Pulse-Width-Modulation}{Primjer modulacije širine pulsa \label{pwm}}{0.6}
+
+\paragraph{Serial.Begin(rate)} inicijalizira serijski protok podataka, gdje je rate brzina prenosa podataka u bitovim po sekundi.
 
 \paragraph{Serial.Read()} vraća prvi bajt serijske komunikacije na ulazu.
 
@@ -135,7 +137,6 @@ Ono što omogćava kontrolisanje ulaza i izlaza Arduino ploče jesu funkcije \ve
 
 \paragraph{attachIntterupt(digitalPinToInterrupt(pin), ISR, mode )} Povezuje stanje pina mode (CHANGE, LOW, RISING, FALLING) sa prekidom u izvršenju loop funkcije i poziva ISR (rutina interapcije) koji je funkcija koja ne prima niti vraća parametre.
 
-\cFigure{Arduino_Pulse-Width-Modulation}{Primjer modulacije širine pulsa \label{pwm}}{0.6}
 
 \subsection{Pinovi}\label{arduinopinovi}
 
@@ -144,18 +145,18 @@ Svaka verzija na sebi ima različit broj i mogućnosti pinova, ali svaka posjedu
 \noindent Dakle tipovi pinova koji postoje su:
 
 \begin{itemize}
-  \item Digitalni - mogu biti ulazni i izlazni. Postavljaju se i očitavaju samo 2 stanja, pomoću funkcije pinMode() (poglavlje \ref{funkcije}) se odabire režim u kojem će raditi, a nakon toga se može ili slati struja jačine 1.0V/1.5V ili 3.3V/5V postavljajući digitalWrite() (poglavlje \ref{funkcije}) HIGH ili LOW respektivno ili očitavati jačina struje koristeći digitalRead() (poglavlje \ref{funkcije})
+  \item Digitalni - mogu biti ulazni i izlazni. Postavljaju se i očitavaju samo 2 stanja, pomoću funkcije pinMode() (poglavlje \ref{funkcije}) se odabire režim u kojem će raditi, a nakon toga se može ili slati struja voltaže 1.0V/1.5V ili 3.3V/5V postavljajući digitalWrite() (poglavlje \ref{funkcije}) HIGH ili LOW respektivno ili očitavati voltaža struje koristeći digitalRead() (poglavlje \ref{funkcije})
   \item PWM - digitalni pinovi koji podržavaju Pulse Width Modulation, tj. modulaciju širine pulsa (Slika \ref{pwm})
-  \item TX - digitalni pin, koristi se za serijsku transmisiju podataka, Serial.Write()  (poglavlje \ref{funkcije})vrši ispis na ovaj pin.
+  \item TX - digitalni pin, koristi se za serijsku transmisiju podataka, Serial.Write()  (poglavlje \ref{funkcije}) vrši ispis na ovaj pin.
   \item RX - digitalni pin, koristi se za serijsko čitanje podataka, Serial.read() (poglavlje \ref{funkcije}) vrši učitavanje sa ovog pina.
   \item SCL - linija sata koja se koristi u I$^2$C komunikaciji (sekcija \ref{itc})
-  \item SCL - linija podataka koja se koristi u I$^2$C komunikaciji
+  \item SDA - linija podataka koja se koristi u I$^2$C komunikaciji
   \item INT - digitalni pinovi koji podržavaju prekide, aktiviraju se attachIntterupt() (poglavlje \ref{funkcije}) funkcijom
-  \item Analogni - pinovi koji imaju mogućnost analognog čitanja jačine struje pomoću analogRead() (poglavlje \ref{funkcije}) funkcije
+  \item Analogni - pinovi koji imaju mogućnost analognog čitanja voltaže struje pomoću analogRead() (poglavlje \ref{funkcije}) funkcije
   \item Power - pinovi vezani za ulaz i izlaz struje u ploči
         \begin{itemize}
-          \item 5V - izlaz sa strujom jačine 5V
-          \item 3.3V - izlaz sa strujom jačine 3.3V
+          \item 5V - izlaz sa strujom voltaže 5V
+          \item 3.3V - izlaz sa strujom voltaže 3.3V
           \item GND - uzemljenje
           \item VIN - pin kroz koji se Arduino može napajati strujom od 9V
           \item RESET - spajanjem na ground restartuje Arduino
@@ -164,9 +165,9 @@ Svaka verzija na sebi ima različit broj i mogućnosti pinova, ali svaka posjedu
 
 \subsection{MEGA}
 
-Arduino MEGA je jedna od verzija Arduino ploča. Na sebi ima ATMEGA2560 mikrokontroler.\\
+Arduino MEGA je jedna od verzija Arduino ploče. Na sebi ima ATMEGA2560 mikrokontroler.\\
 
-Ploča zahtjeva ulaznu struju od 6V do 20V, s tim da je preporučeno između 7V i 12V. Načini na koje se struja može dovesti u kontroler su kroz USB A interfejs, koji se ujedno i koristi za povezivanje sa računarom, kroz 2.1mm priključak za napajanje sa pozitivnim centrom ili direktno kroz VIN pin.
+Ploča zahtjeva ulaznu struju od 6V do 20V, s tim da je preporučeno između 7V i 12V. Načini na koje se struja može dovesti u kontroler su kroz USB A interfejs, koji se ujedno koristi i za povezivanje sa računarom, kroz 2.1mm priključak za napajanje sa pozitivnim centrom ili direktno kroz VIN pin.
 
 \begin{table}[h]
   \centering

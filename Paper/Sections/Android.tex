@@ -6,14 +6,14 @@
 U ovom dijelu će biti opisana Android aplikacija, koja je dio samog projekta samobalansirajućeg robota.
 
 \subsection{Dizajn}
-Pošto će se robot moći kretati u 2 smjera, i rotirati, također u 2 smjera, mobilnu aplikaciju će činiti 4 dugmeta, smještena na sredini ekrana.
+Pošto će se robot moći kretati u 2 smjera i rotirati također u 2 smjera, mobilnu aplikaciju će činiti 4 dugmeta smještena na sredini ekrana.
 
 \cFigure{Android_Dizajn}{Dizajn mobilne aplikacije u Adobe XD}{0.4}
 
-\noindent Dugmići inicijalno imaju postavljenu providnost na 50\%, a 100\% samo dok su pritisnuti.
+\noindent Dugmići inicijalno imaju postavljenu providnost na 50\%, a vidljivi su 100\% samo dok su pritisnuti.
 
 \subsubsection{GridLayout}
-Kako bi dizajn bio responsivan i proporcije ostale jednake na većim i manjim ekranima, korišten je GridLayout. Kada se širina layout-a postavi na \verb|match_parent|, mreža će zauzeti širinu uređaja. U ovom slučaju nam je potrebno 3 kolone i 3 reda
+Kako bi dizajn bio responsivan i proporcije ostale jednake na većim i manjim ekranima korišten je GridLayout. Kada se širina layout-a postavi na \verb|match_parent|, mreža će zauzeti širinu uređaja. U ovom slučaju nam je potrebno 3 kolone i 3 reda
 
 \begin{table}[h]
     \centering
@@ -44,7 +44,7 @@ Kako bi dizajn bio responsivan i proporcije ostale jednake na većim i manjim ek
 \end{code}
 
 \subsubsection{ImageButton}
-ImageButton je zapravo obično dugme, kojeg umjesto okvira i teksta u njemu, vizuelno predstavlja slika. Kako bi napravio dizajnirani izgled, u odgovarajuće kolone i redove sam postavio ImageButton-e koji će služiti kao dugmad za upravljanje robotom.
+ImageButton je zapravo obično dugme kojeg umjesto okvira i teksta u njemu vizuelno predstavlja slika. Kako bih napravio dizajnirani izgled, u odgovarajuće kolone i redove sam postavio ImageButton-e koji će služiti kao dugmad za upravljanje robotom.
 
 \cFigure{Android_Dugmici}{ImageButton-i unutar GridLayout-a}{0.5}
 
@@ -61,7 +61,7 @@ ImageButton je zapravo obično dugme, kojeg umjesto okvira i teksta u njemu, viz
 \end{code}
 
 \vspace{0.5cm}
-\noindent Stil za ImageButton je definisan u \verb|style.xml| datoteci. Rotacije slike se može postići postavljanjem atributa rotation iz imenskog prostora "android". Transparentnost se postavlja atributom alpha, također iz imenskog prostora "android". \verb|"Res/drawable"| je putanja direktorija u kojem se nalaze datoteke slika, koje se zatim mogu referencirati iz xml datoteke i postaviti kao slika ImageButtona, background atributom. Atribut gravity postavlja dugme u središte ćelije GirdLayout-a.\\
+\noindent Stil za ImageButton je definisan u \verb|style.xml| datoteci. Rotacija slike se može postići postavljanjem atributa rotation iz imenskog prostora "android". Transparentnost se postavlja atributom alpha, također iz imenskog prostora "android". \verb|"Res/drawable"| je putanja direktorija u kojem se nalaze datoteke slika koje se zatim mogu referencirati iz xml datoteke i postaviti kao zadana pozadina ImageButtona koreisteći se background atributom. Atribut gravity postavlja dugme u središte ćelije GirdLayout-a.\\
 
 \begin{code}
     \begin{minted}[breaklines]{xml}
@@ -78,10 +78,10 @@ ImageButton je zapravo obično dugme, kojeg umjesto okvira i teksta u njemu, viz
 \end{code}
 
 \subsection{Kod}
-Pri programiranju Android aplikacija, kod se može pisati u Java ili Kotlin programskom jeziku. Ja sam za izradu ove aplikacije odlučio koristiti Java jezik.
+Pri programiranju Android aplikacija progrmaski  kod se može pisati u Java ili Kotlin programskom jeziku. Ja sam za izradu ove aplikacije odlučio koristiti Java jezik.
 
 \subsubsection{Bluetooth servis}
-S obzirom na to da će aplikacija sa robotom komunicirati putem bluetooth veze, potrebno je prvo uspostaviti konekciju,a zatim slati podatke putem iste. Kako bi se koristio bluetooth adapter uređaja, potrebno je,u AndroidManifest.xml datoteci, dodati opciju za zahtjevanje permisija pri prvom pokretanju aplikacije.
+S obzirom na to da će aplikacija sa robotom komunicirati putem bluetooth veze, potrebno je prvo uspostaviti konekciju, a zatim slati podatke putem iste. Kako bi se koristio bluetooth adapter uređaja, potrebno je u AndroidManifest.xml datoteci dodati opciju za zahtjevanje permisija pri prvom pokretanju aplikacije.
 
 \begin{code}
     \begin{minted}[breaklines]{xml}
@@ -94,13 +94,13 @@ S obzirom na to da će aplikacija sa robotom komunicirati putem bluetooth veze, 
     \caption{Zahtjevanje permisija za korištenje bluetooth-a}
 \end{code}
 
-\paragraph{BluetoothAdapter} je objekat koji se nalazi u statičkoj memoriji, u kodu ga je moguće dobiti koristeći \verb|BluetoothAdapter.getDefaultAdapter()|. Adapter posjeduje funkciju \verb|enable| koja će na uređaju upaliti bluetooth, ukoliko već nije upaljen.
+\paragraph{BluetoothAdapter} je objekat koji se nalazi u statičkoj memoriji. U kodu ga je moguće dobiti koristeći \verb|BluetoothAdapter.getDefaultAdapter()|. Adapter posjeduje funkciju \verb|enable| koja će na uređaju upaliti bluetooth ukoliko već nije upaljen.
 
-\paragraph{BluetoothDevice} \label{btdev}je tip objekta koji sadrži informacije o uređaju sa kojim želimo komunicirati, objekat uređaja možemo dobiti iz BluetoothAdapter-a na osnovu njegove MAC adrese, koristeći \verb|getRemote| funkciju.
+\paragraph{BluetoothDevice} \label{btdev}je tip objekta koji sadrži informacije o uređaju sa kojim želimo komunicirati. Objekat uređaja možemo dobiti iz BluetoothAdapter-a na osnovu njegove MAC adrese koristeći \verb|getRemote| funkciju.
 
-\paragraph{BluetoothSocket} je objekat koji predstavlja konekciju sa drugim uređajem. Pozivajući funkciju \verb|createInsecureRfcommSocketToServiceRecord| nad objektom uređaja, kao rezultat ćemo dobiti BluetoothSocket objekat, nakon čega je potrebno pozvati \verb|connect| funkciju na socket objektom kako bi se veza između uređaja mogla uspostaviti. Svaki socket ima dva stream-a podataka, input i output stream. Iz input streama je moguće čitati podatke koji dolaze na adapter, dok se u output stream upisuju podaci koje želimo poslati povezaonm uređaju.
+\paragraph{BluetoothSocket} je objekat koji predstavlja konekciju sa drugim uređajem. Pozivajući funkciju \verb|createInsecureRfcommSocketToServiceRecord| nad objektom uređaja kao rezultat ćemo dobiti BluetoothSocket objekat, nakon čega je potrebno pozvati \verb|connect| funkciju na socket objektom kako bi se veza između uređaja mogla uspostaviti. Svaki socket ima dva stream-a podataka: input i output stream. Iz input streama je moguće čitati podatke koji dolaze na adapter, dok se u output stream upisuju podaci koje želimo poslati povezaonm uređaju.
 
-\paragraph{ConnectionThread} je klasa koju sam napravio kako bih razdvojio bluetooth funkcionalnosti od UI threada. Kako bih ovo uradio, bilo je potrebno da moja klasa naslijedi Thrad roditeljsku klasu. U konstruktoru kao parametar, ova klasa pirma BluetoothSocket, čiji outputstream onda smješta u svoju privatnu varijablu. Funkcija kojom se šalju podaci, write, na osnovu String inputa, generiše niz byte-ova i koristeći \verb|write| nad socket objektom, poruku šalje povezanom uređaju.
+\paragraph{ConnectionThread} je klasa koju sam napravio kako bih razdvojio bluetooth funkcionalnosti od UI thread-a. Kako bih ovo uradio, bilo je potrebno da ConnectionThread klasa naslijedi Thread roditeljsku klasu. Ova klasa kao parametar u konstruktoru pirma BluetoothSocket čiji outputstream onda smješta u svoju privatnu varijablu. Funkcija kojom se šalju podaci (write) na osnovu String inputa generiše niz byte-ova i koristeći \verb|write| nad socket objektom poruku šalje povezanom uređaju.
 
 \subsubsection{MainActivity}
 Aktivnost koja se pokreće pri praljenju aplikacije se naziva "MainActivity". Obzirom da je Java objekto orijentiran programski jezik, aktivnost je javna klasa koja nasljeđuje "AppCompatActivity" klasu.
@@ -125,7 +125,7 @@ Aktivnost koja se pokreće pri praljenju aplikacije se naziva "MainActivity". Ob
 
 \paragraph{findViewById(id)} je funkcija koja vraća view objekat na osnovu njegovog id-a koji je postavljen unutar \verb|xml| datoteke.
 
-\paragraph{Eventi}  su objekti koji nastaju kada se desi promjena na korisničkom sučelju. Eventima se mogu dodijeliti funkcije koje će se izvršiti kada se event dogodi. Ovi tipovi objekata se najčešće koriste zajedno sa eventListener objektima kojima se odabranim elementima korisničkog sučelja, pridodaju pojedini eventi. Kada se aktivira listener, unutar funkcije se može pristupiti dva objekta, view sa kojim je izvršena interakcija, i tip eventa koji se dogodio. \verb|setOnTouchListener| kao tip eventa može imati \verb|MotionEvent.ACTION_UP|, što označava da dugme više nije u pritisnutom stanju.
+\paragraph{Eventi}  su objekti koji nastaju kada se desi promjena na korisničkom sučelju. Eventima se mogu dodijeliti funkcije koje će se izvršiti u trenutku kada se event dogodi. Ovi tipovi objekata se najčešće koriste zajedno sa eventListener objektima kojima se odabranim elementima korisničkog sučelja, pridodaju pojedini eventi. Kada se aktivira listener, unutar funkcije se može pristupiti dva objekta, view sa kojim je izvršena interakcija, i tip eventa koji se dogodio. \verb|setOnTouchListener| kao tip eventa može imati \verb|MotionEvent.ACTION_UP|, što označava da dugme više nije u pritisnutom stanju.
 
 \begin{code}
     \begin{minted}[breaklines, tabsize=2]{java}

@@ -30,12 +30,12 @@ $$
     I=K_i*\int_{0}^{t}e(t')dt'
 $$
 
-\noindent Kada se greška smanjuje, usporava se rast integranlog dijela. Ovo rezultuje približavanjem proporcionalnog dijela 0 što se kompenzuje greškom akumuliranom u integralnom dijelu.
+\noindent Kada se greška smanjuje, usporava se rast integranlog dijela. Ovo rezultuje približavanjem proporcionalnog dijela nuli što se kompenzuje greškom akumuliranom u integralnom dijelu.
 
 \cFigure{PID_PI}{Graf PI kontrolera}{0.6}
 
 \subsection{Derivativni dio}
-Derivativni dio za zadatak ima da predvidi trend smanjenja greške u idućem koraku koristeći razliku između trenutne i prošle greške. Mjereći koliko brzo se greška u procesu mijenja, nastoji istu eliminisati.
+Derivativni dio za zadatak ima da predvidi trend smanjenja greške u idućem koraku koristeći razliku između trenutne i dosadašnje greške. Mjereći koliko brzo se greška u procesu mijenja, nastoji istu eliminisati.
 
 $$
     D=K_d*\frac{de(t)}{dt}

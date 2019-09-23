@@ -4,10 +4,10 @@
 \begin{document}
 \section{MPU6050} \label{mpu}
 
-MPU6050 je uređaj za praćenje kretanja i orijentacije tijela na kojem se nalazi. Kombinacija žiroskopa i akcelerometra (koji imaju po 3 ose) sa Digital Motion Processor-om daje vrlo precizne podatke o trenutnom položaju uređaja.
+MPU6050 je uređaj koji služi za praćenje kretanja i orijentacije tijela na kojem se nalazi. Kombinacija žiroskopa i akcelerometra (koji imaju po 3 ose) sa Digital Motion Processor-om daje vrlo precizne podatke o trenutnom položaju uređaja.
 
 \subsection{Žiroskop}
-Žiroskop je uređaj koji, koristeći zemljinu gravitaciju, određuje svoju orijentaciju. Sastavljen je od diska koji se vrti (rotora), osnove na kojoj se disk nalazi na kojoj se također nalaze tri stacionarna prstena. Kada se orijentacija promijeni, zahvaljujući svojoj rotacionoj sili, rotor ostaje u istom orijentacionom odnosu sa zemljom, što omogućava očitavanje pomjeranja u odnosu na stacionarni dio uređaja oko žiroskopa.
+Žiroskop je uređaj koji, koristeći zemljinu gravitaciju, određuje sopstvenu orijentaciju. Sastavljen je od diska koji se vrti (rotora) i osnove na kojoj se disk nalazi na kojoj se također nalaze tri stacionarna prstena. Kada se orijentacija promijeni, zahvaljujući svojoj rotacionoj sili, rotor ostaje u istom orijentacionom odnosu sa zemljom, što omogućava očitavanje pomjeranja u odnosu na stacionarni dio uređaja oko žiroskopa.
 
 \cFigure{MPU6050_Ziroskop}{Žiroskop}{0.7}
 
@@ -40,7 +40,7 @@ Eulerovi uglovi se koriste kako bi se predstavila orijentacija tijela u odnosu n
 
 \begin{itemize}
     \item Svaku orijentaciju nije moguće predstaviti koristeći samo jednu jednačinu.
-    \item Tzv. ``Gimbal lock'' je problem koji nastaje kada ugao između bilo koje dvije ose postane 0\textdegree čime se gubi jedan stepen slobode koji rotacija ima.
+    \item Tzv. ``Gimbal lock'' je problem koji nastaje kada ugao između bilo koje dvije ose postane 0{\textdegree}  čime se gubi jedan stepen slobode koji rotacija ima.
 \end{itemize}
 
 \subsubsection{Kvaternioni}
@@ -105,13 +105,13 @@ $$p'=qpq^{-1}$$
 \noindent Podaci se kroz SDA prenose bit po bit te su sinkronizirani sa SCL signalima, kontrolisanim od strane master uređaja. Maksimalan broj slave uređaja za jedan master uređaj je 1008, dok je u obrnutoj direkciji maksimalan broj teoretski beskonačan.
 
 \subsubsection{Paketi}
-Komunikacija ovog protokola se zasniva na slanju paketa. Veličina mu nije fiksna, već se dinamički,pomoću početnog i stop signala, određuju početak i kraj mrežnog paketa. Konstrukciju jednog paketa čini 9 okvirova(6 tipova okvira):
+Komunikacija ovog protokola se zasniva na slanju paketa. Veličina mu nije fiksna, već se dinamički, pomoću početnog i stop signala, određuju početak i kraj mrežnog paketa. Konstrukciju jednog paketa čini 9 okvirova(6 tipova okvira):
 
 \begin{itemize}
     \item Početni signal - na SDA putanji se prebacuje sa visoke voltažne vrijednosti na nisku, prije nego što se na SCL učini isto.
     \item Adresni okvir - identificira slave uređaj sa kojim master želi komunicirati (7-10 bita)
     \item Bit primanja ili slanja - visoka voltažna vrijednost označava da master uređaj od ovog trenutka šalje podatke odabranom slave uređaju, dok niska označava da će početi proces primanja podataka.(1 bit)
-    \item ACK/NACK - nakon svakog okvira se šalje ACK poruka sa informacijom pošiljaocu da li je njegova poruka uspješno primljena(1 bit)
+    \item ACK/NACK - nakon svakog okvira se šalje ACK poruka sa informacijom pošiljaocu o tome da li je njegova poruka uspješno primljena(1 bit)
     \item Okvir sa podacima (8 bit)
     \item Stop signal - proces obrnut početnom uslovu gdje se prebacuje na visoku voltažnu vrijednost
 \end{itemize}
@@ -119,7 +119,7 @@ Komunikacija ovog protokola se zasniva na slanju paketa. Veličina mu nije fiksn
 
 \paragraph{Okvir sa podacima} se šalje nakon što master uređaj dobije pozitivan ACK frame od slave uređaja. Nakon svakog poslanog podatkovnog okvira, trenutačno se prema master uređaju šalje ACK/NACK okvir od strane slave uređaja čija se adresa nalazi u adresnom okvriu.\\
 
-\cFigure{MPU6050_I2C-Paket}{Primjer \itc paketa}{1}
+\cFigure{MPU6050_I2C-Paket}{Primjer {\itc} paketa}{1}
 
 \noindent Brzina ove komunikacije može biti između 100kbps i 5Mbps.\\
 
@@ -127,7 +127,7 @@ Komunikacija ovog protokola se zasniva na slanju paketa. Veličina mu nije fiksn
 
 \subsection{Specifikacije}
 
-\begin{table}[h]
+\begin{table}[h!]
     \centering
     \begin{tabular}{ |c|c| }
         \hline
@@ -150,7 +150,7 @@ Komunikacija ovog protokola se zasniva na slanju paketa. Veličina mu nije fiksn
     \item GND - uzemljenje
     \item SCL - serijski sat
     \item SDA - serijska putanja podataka
-    \item XCL - pomoćni sat, koristi se za konekciju na serijski sat drugih I2C uređaja
+    \item XCL - pomoćni sat, koristi se za konekciju na serijski sat drugih {\itc} uređaja
     \item XDA - pomoćna putanja podataka, koristi se za konekciju na serijsku putanju podataka drugih \itc uređaja
     \item AD0 - slave adresa uređaja, ovaj pin određuje nulti bit 7 bit-ne adrese i, kada je na njemu visoki stepen voltaže, mijenja adresu uređaja postavivši nulti bit na 1
     \item INT - digitalni pin koji se koristi za prekide.
@@ -169,7 +169,7 @@ I2Cdevlib je biblioteka napisana u C++ programskom jeziku koja olakšava korišt
 
 \subparagraph{Calibrate[Gyro | Accel]Offset(n)} \noindent vrši kalibraciju žiroskopa i akcelerometra tako da trenutna pozicija bude nulta za oboje. Broj n predstavlja koliko puta će se ponoviti kalibracija prije uzimanja srednje vrijednosti.
 
-\subparagraph{getIntStatus()} \noindent vraća informaciju o tome da li trenutno postoji signal za prekid koji je došao od MPU6050 uređajai.
+\subparagraph{getIntStatus()} \noindent vraća informaciju o tome da li trenutno postoji signal za prekid koji je došao od MPU6050 uređaja.
 
 \subparagraph{dmpGetFIFOPacketSize()} \noindent vraća veličinu paketa koja se nalazi u FIFO bufferu.
 
