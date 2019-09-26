@@ -1,7 +1,7 @@
 #ifndef Motor_h
-#define Motorr_h
+#define Motor_h
 
-#include <arduino.h>
+#include <Arduino.h>
 
 enum Direction{
   Clockwise,
@@ -20,7 +20,8 @@ class Motor
     void setupMove(Direction direction);
     bool motionComplete();
     void processMovement(void);
-
+    void makeStep ();
+    void setDirection(Direction Direction);
   private:
 
     byte stepPin;
@@ -32,6 +33,7 @@ class Motor
     float desiredStepPeriod_InUS;
     long decelerationDistance_InSteps;
     bool stopping;
+    bool started;
 
     float ramp_InitialStepPeriod_InUS;
     float ramp_NextStepPeriod_InUS;
