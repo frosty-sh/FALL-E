@@ -72,18 +72,18 @@ U procesu balansiranja robota ključna komponenta je MPU6050. Očitavanjem njego
 Ključni dio projekta je sami Arduino program koji će kontrolisati robota.
 
 \subsubsection{Biblioteke}
-Za izradu programa, korištene su funkcije 5 biblioteka.
+Za izradu programa, korištene su funkcije 4 biblioteke.
 
-\paragraph{PID}\footnote{https://github.com/br3ttb/Arduino-PID-Library}\mbox{}\\
-\noindent Ova biblioteka nudi jednostavne funkcije za implementaciju PID kontrolera.
-\begin{itemize}
-    \item PID(\&y, \&u, \&r, Kp, Ki, Kd) - konstruktor koj prima adrese inicijaliziranih varijabli za ulaz, izlaz i ciljanu vrijednost, kao i parametre za podešavanje
-    \item SetOutputLimits(m,n) - postavlja limite izlazne vrijednosti kako bi se izlaz mogao skalirati
-    \item SetSampleTime(t) - postavlja vremensku varijablu za kontroler u milisekundama
-    \item Compute() - vrši PID kalkulaciju i mijenja vrijednost izlazne varijable
-\end{itemize}
+% \paragraph{PID}\footnote{\url{https://github.com/br3ttb/Arduino-PID-Library}\mbox{}}\\
+% \noindent Ova biblioteka nudi jednostavne funkcije za implementaciju PID kontrolera.
+% \begin{itemize}
+%     \item PID(\&y, \&u, \&r, Kp, Ki, Kd) - konstruktor koj prima adrese inicijaliziranih varijabli za ulaz, izlaz i ciljanu vrijednost, kao i parametre za podešavanje
+%     \item SetOutputLimits(m,n) - postavlja limite izlazne vrijednosti kako bi se izlaz mogao skalirati
+%     \item SetSampleTime(t) - postavlja vremensku varijablu za kontroler u milisekundama
+%     \item Compute() - vrši PID kalkulaciju i mijenja vrijednost izlazne varijable
+% \end{itemize}
 
-\paragraph{TimerOne}\footnote{https://www.arduinolibraries.info/libraries/timer-one}\mbox{}\\
+\paragraph{TimerOne}\footnote{\url{https://www.arduinolibraries.info/libraries/timer-one}\mbox{}}\\
 \noindent Pošto će u glavnom programu biti potrebno određene događaje izvršavati na osnovu vremenskog parametra, uključena je biblioteka koja omokogućava podešavanje prekida nakon zadanog vremena.
 \begin{itemize}
     \item Initialize(t) - postavlja vrijeme koje će proći između izvršenja prekida
@@ -92,6 +92,13 @@ Za izradu programa, korištene su funkcije 5 biblioteka.
 
 \paragraph{I2Cdevlib}\mbox{}\\
 \noindent Ponuđene funkcije ove biblioteke su već opisane u sekciji \ref{itclib}.
+
+\paragraph{Metro}\mbox{}\\
+\noindent Izmijenjena Metro\footnote{\url{https://www.pjrc.com/teensy/td\_libs\_Metro.html}} biblioteka omogućava postavljanje sata koji provjerava da li je zadani period prošao te održava neki proces u postavljenom ritmu.
+\begin{itemize}
+    \item setInterval(t) - postavlja zadani interval između otkucaja
+    \item check() - vraća boolean vrijednost u zavisnoti da li je vrijeme otkucaja prošlo, te počinje čekanje novog otkucaja.
+\end{itemize}
 
 \subsubsection{Motors biblioteka}
 Prvobitno sam napisao kompletnu biblioteku za akceleraciju i deakceleraciju stepper motora kako bi se robot fluidnije kretao, ali sam kasnije došao do zaključka da će se akceleracija prirodno dogoditi, jer naginjanjem robota PID izlaz postepeno ubrzava motore ka većim brzinama. Ipak mi je jedan dio te biblioteke poslužio i u finalnom projektu.

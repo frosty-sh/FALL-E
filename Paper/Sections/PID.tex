@@ -62,15 +62,15 @@ $$
 \subsection{Podešavanje parametara} \label{tuning}
 Jedan od najvećih problema sa kojim se dizajneri PID kontrolera susreću jeste podešavanje parametara.\\
 
-\noindent Ručno podešavanje paramtara je metoda koja se započinje tako što se $K_i$ i $K_d$ inicijalno postave na 0. Nakon toga, $K_p$ je potrebno povećavati sve dok petlja ne počne oscilirati. Vrijednost $K_p$ bi trebala biti podešena na jednu polovinu vrijednosti.
+\noindent Ručno podešavanje paramtara je metoda koja se započinje tako što se $K_i$ i $K_d$ inicijalno postave na 0. Nakon toga, $K_p$ je potrebno povećavati sve dok petlja ne počne oscilirati. Vrijednost $K_p$ bi trebala biti podešena na jednu polovinu vrijednosti\cite{pidtuning}.
 
 \cFigure{PID_Kp}{efekt $K_p$ parametra na izlaz}{0.5}
 
-\noindent Kada je vrijednost $K_p$ postavljena, prelazi se na podešavanje $K_i$ parametra. Potrebno je parametar povećavati sve dok se svaki pomak ne može korektovati u najmanjem vremenu neophodno kako bi sistem nastavio raditi. Previše $K_i$ vrijednosti dovodi sistem u nestabilno stanje.
+\noindent Kada je vrijednost $K_p$ postavljena, prelazi se na podešavanje $K_i$ parametra. Potrebno je parametar povećavati sve dok se svaki pomak ne može korektovati u najmanjem vremenu neophodno kako bi sistem nastavio raditi. Previše $K_i$ vrijednosti dovodi sistem u nestabilno stanje\cite{pidtuning}.
 
 \cFigure{PID_Ki}{efekt $K_i$ parametra na izlaz}{0.5}
 
-\noindent Ukoliko je potrebno, $K_d$ treba povećavati dok se vrijeme osciliranje ne smanji na minimum. Brzi sistemi obično imaju podešen ovaj parametar tako da dolazi do malog prelijetanja kako bi se sistem prije doveo u stanje balansa. Neki sistemi nemaju toleranciju na prelijetanje pa se ova metoda ne može primijeniti.
+\noindent Ukoliko je potrebno, $K_d$ treba povećavati dok se vrijeme osciliranje ne smanji na minimum. Brzi sistemi obično imaju podešen ovaj parametar tako da dolazi do malog prelijetanja kako bi se sistem prije doveo u stanje balansa. Neki sistemi nemaju toleranciju na prelijetanje pa se ova metoda ne može primijeniti\cite{pidtuning}.
 
 \cFigure{PID_Kd}{efekt $K_d$ parametra na izlaz}{0.5}
 

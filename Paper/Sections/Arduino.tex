@@ -4,7 +4,7 @@
 \begin{document}
 
 \section{Arduino}
-Arduino je elektronički bazirana platforma otvorenog koda\footnote{https://github.com/arduino}. Radi se o ploči koja na sebi najčešće ima Atmel-ov 8-bitni AVR mikrokontroler. Iako postoji više vrsta Arduino ploča (Uno, Nano, Mega, Leonardo itd.), koncept programiranja njihovog ponašanja je isti. Međutim, ono što čini razlike među ovim verzijama, jeste količina radne memorije, kao i broj ulazno/izlaznih pinova. Ono što čini ovu platformu veoma popularnom jeste njena pristupačnost, kako cijenom, tako i stepenom potrebnog predznanja iz polja elektronike i integralnih kola.\\
+Arduino je elektronički bazirana platforma otvorenog koda\footnote{\url{https://github.com/arduino}}. Radi se o ploči koja na sebi najčešće ima Atmel-ov 8-bitni AVR mikrokontroler. Iako postoji više vrsta Arduino ploča (Uno, Nano, Mega, Leonardo itd.), koncept programiranja njihovog ponašanja je isti. Međutim, ono što čini razlike među ovim verzijama, jeste količina radne memorije, kao i broj ulazno/izlaznih pinova. Ono što čini ovu platformu veoma popularnom jeste njena pristupačnost, kako cijenom, tako i stepenom potrebnog predznanja iz polja elektronike i integralnih kola\cite{arduino}.\\
 
 Arduino, kao platforma, nije namijenjen za rješenja u produkciji i masovnu proizvodnju, već za izradu prototipa uređaja ili projekte koji spadaju u kategoriju hobija. Osobina, koja za to ima najveći značaj, je opća namjenjenost Arduina što ga u proizvodnji čini skupljim od ploča koje su napravljene da služe samo jednoj svrsi.\\
 
@@ -13,7 +13,7 @@ Arduino, kao platforma, nije namijenjen za rješenja u produkciji i masovnu proi
 \subsection{Proces kompajliranja}\label{kompajliranje}
 Programski jezik u kojem se pišu datoteke koje sadrže Arduino izvorni kod je C++. Međutim većina standardnih biblioteka je preuzeta iz C programskog jezika, zbog male količine radne memorije kontrolera. Arduino datoteke je moguće prepoznati po njihovoj ``.ino'' eksteniziji. Ove datoteke se još nazivaju i skicama.\\
 
-Nakon što se pokrene proces kompajliranja projekta, Arduino okruženje pravi male promjene u kodu, kako bi se nakon toga mogao proslijediti gcc i g++ kompajleru. U ovoj fazi se sve datoteke u direktoriju kombinuju u jednu i na njen početak se dodaje \verb|#Include<Arduino.h>| zaglavlje. Zatim slijedi povezivanje koda sa standardnim Arduino bibliotekama, a nakon toga i sa ostalim bibliotekama uključenim u direktorji skice. Kako bi bila uključena u proces prevođenja, biblioteka (njen .cpp i .h dokument) se mora nalaziti na \verb|libraries\{NazivBiblioteke}| putanji.\\
+Nakon što se pokrene proces kompajliranja projekta, Arduino okruženje pravi male promjene u kodu, kako bi se nakon toga mogao proslijediti gcc i g++ kompajleru. U ovoj fazi se sve datoteke u direktoriju kombinuju u jednu i na njen početak se dodaje \verb|#Include<Arduino.h>| zaglavlje. Zatim slijedi povezivanje koda sa standardnim Arduino bibliotekama, a nakon toga i sa ostalim bibliotekama uključenim u direktorji skice. Kako bi bila uključena u proces prevođenja, biblioteka (njen .cpp i .h dokument) se mora nalaziti na \verb|libraries\{NazivBiblioteke}| putanji\cite{arduinoWiki}.\\
 
 Kada je skica povezana i prevedena, vrijeme je da takva bude prebačena u Arduino memoriju gdje će se izvršavati.
 
@@ -29,7 +29,7 @@ Funkcija ``Setup'' se izvršava samo jednom pri pokretanju kontrolera i služi z
 
 \subsection{Razvojno okruženje}
 \subsubsection{Arduino IDE}
-Arduino posjeduje svoje oficijelno okruženje pod nazivom ``Arduino IDE''. Ono dolazi u dvije verzije - online\footnote{https://create.arduino.cc/editor} i verzija koju instaliramo na lokalni računar. U ovom tekstu ću se fokusirati na offline okruženje, jer se uz njegovu instalaciju automatski instaliraju i Windows driveri potrebni za prebacivanje koda na Arduino..\\
+Arduino posjeduje svoje oficijelno okruženje pod nazivom ``Arduino IDE''. Ono dolazi u dvije verzije - online\footnote{\url{https://create.arduino.cc/editor}} i verzija koju instaliramo na lokalni računar. U ovom tekstu ću se fokusirati na offline okruženje, jer se uz njegovu instalaciju automatski instaliraju i Windows driveri potrebni za prebacivanje koda na Arduino..\\
 
 \noindent Pri kreiranju prve skice ispred korisnika se nalazi ``prazna'' datoteka.
 
@@ -59,15 +59,15 @@ Arduino posjeduje svoje oficijelno okruženje pod nazivom ``Arduino IDE''. Ono d
 
 \subsubsection{PlatformIO}
 
-Pored Arduino IDE, programerima na izboru stoji još razvojnih okruženja u kojima mogu razvijati svoje Arduino kodove. Jedno od tih okruženja je PlatformIO.\\
+Pored Arduino IDE, programerima na izboru stoji još razvojnih okruženja u kojima mogu razvijati svoje Arduino kodove. Jedno od tih okruženja je PlatformIO\footnote{\url{https://platformio.org/}}.\\
 
-PlatformIO se instalira u vidu nadogradnje za Visual Studio Code, koji i sam spada u kategoriju programa otvorenog koda. Kao i Arduino IDE, i ovaj alat nudi izbor ploče koja će se prorgamirati, među kojima je, pored samog Arduina, oko 700 ponuđenih\footnote{https://platformio.org/}. S obzirom da je sada razvojno okruženje Visual Studio Code, to donosi sve njegove prednosti(markiranje sintakse, Intellisense, personalnim postavkama okruženja itd.).\\
+PlatformIO se instalira u vidu nadogradnje za Visual Studio Code, koji i sam spada u kategoriju programa otvorenog koda. Kao i Arduino IDE, i ovaj alat nudi izbor ploče koja će se prorgamirati, među kojima je, pored samog Arduina, oko 700 ponuđenih\cite{platformIOHome}. S obzirom da je sada razvojno okruženje Visual Studio Code, to donosi sve njegove prednosti(markiranje sintakse, Intellisense, personalnim postavkama okruženja itd.).\\
 
 Razlog, pored već navedenih, zbog kojeg sam ja izabrao PlatformIO jeste njegova arhitektura projekta. Naime, u ovoj platformi se koristi standardna arhitektura cpp-a, što je nekome ko dolazi iz tog svijeta, daleko lakše za održavati. Još jedna minorna razlika između ova dva okruženja je to da glavna datoteka sa izvornim kodom u PlatformIO nije ``.ino'', već ``main.cpp'' u kojoj je obavezno uključiti \verb|Arduino.h| biblioteku.
 
 \subsection{Tipovi varijabli}
 
-Pošto ploča ima ograničenu radnu memoriju, izbor tipova podataka je veoma bitan zbog njihovog predefinisanog memorijskog prostora koji zauzimaju. Neki od najčešće korištenih tipova su:
+Pošto ploča ima ograničenu radnu memoriju, izbor tipova podataka je veoma bitan zbog njihovog predefinisanog memorijskog prostora koji zauzimaju. Neki od najčešće korištenih tipova\cite{arduino} su:
 
 \begin{itemize}
   \item bool (8 bita) - može sadržati jednu od dvije vrijednosti (da ili ne)
@@ -97,7 +97,7 @@ Pošto ploča ima ograničenu radnu memoriju, izbor tipova podataka je veoma bit
 
 \subsection{Konstante}
 
-\verb|Arduino.h| biblioteka dolazi sa korisnim konstantama.
+\verb|Arduino.h| biblioteka dolazi sa korisnim konstantama\cite{arduinoConst}.
 
 \begin{itemize}
   \item INPUT | OUTPUT - ova konstanta upravlja električno ponoašanje pina, i priprema pin da prihvata ulazne ili šalje izlazne signale.
@@ -140,7 +140,7 @@ Ono što omogćava kontrolisanje ulaza i izlaza, kao i upravljenje Arduino ploč
 
 \subsection{Pinovi}\label{arduinopinovi}
 
-Svaka verzija na sebi ima različit broj i mogućnosti pinova, ali svaka posjeduje barem po jedan pin svake vrste (sa izuzecima), kako bi se omogućile jednake funkcionalnosti svih ploča.
+Svaka verzija ploče na sebi ima različit broj i mogućnosti pinova, ali svaka posjeduje barem po jedan pin svake vrste (sa izuzecima), kako bi se omogućile jednake funkcionalnosti svih ploča.
 
 \noindent Dakle tipovi pinova koji postoje su:
 

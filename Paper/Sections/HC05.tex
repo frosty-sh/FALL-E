@@ -9,9 +9,9 @@ Obzirom da će se robotom moći upravljati pomoću Android aplikacije koja šalj
 Prije nego što pređem na temu samih specifikacija uređaja, posvetit ću nekoliko paragrafa tehnologijama na kojima se rad modula zasniva.
 
 \subsubsection{Piconet}
-Piconet je ad hoc mreža koja povezuje 2 ili više uređaja povezanih pomoću bluetooth protokola koji imaju usklađen sat, kao i sekvencu skoka. To omogućava \textit{master} uređaju da bude povezan na 7 aktivnih i do 255 neaktivnih \textit{slave} uređaja. Zbog toga što bluetooth sistemi rade na 79 kanala, šansa da dođe do interferencije dva piconeta je oko 1.5\%.
-\vspace{1cm}
+Piconet je ad hoc mreža koja povezuje 2 ili više uređaja povezanih pomoću bluetooth protokola sa usklađen satovima, kao i sekvencom skoka. U jednom trenutku \textit{master} uređaj može biti povezan na 7 aktivnih i do 255 neaktivnih \textit{slave} uređaja. Zbog toga što bluetooth sistemi rade na 79 kanala, šansa da dođe do interferencije dva piconeta je oko 1.5\%. Ova mreža se još često naziva i PAN (Personal Area Network).\\
 \cFigure{HC-05_Piconet}{Piconet}{0.6}
+\clearpage
 
 \subsubsection{Scatternet}
 Scatternet je mreža koja se sastoji od 2 ili više piconeta. Kako bi ovo bilo moguće, jedan slave uređaj mora biti povezan na 2 master uređaja ili se master uređaj iz jedne mreže ponaša kao slave uređaj druge.
@@ -21,7 +21,7 @@ Scatternet je mreža koja se sastoji od 2 ili više piconeta. Kako bi ovo bilo m
 Skokovi u frekvenciji su neizbježna karakteristika bluetooth uređaja. Zbog toga što su bluetooth uređaji stalno u pokretu (mobiteli, satovi, slušalice, zvučnici itd.), mora postojati način da se izbjegne interferencija između ovih uređaja. Adaptive Frequency Hopping nastoji riješiti ovaj problem, mijenjajući frekvenciju na kojoj bluetooth uređaj radi. Što se tiče adaptivnosti, taj dio naziva proizlazi iz činjenice da uređaj prvo skenira kanale tražeći kanal sa najmanje prometa.
 
 \subsubsection{Phase Shift Keying}
-Phase-shift keying (PSK) je metoda digitalne komunikacije u kojoj se faza transmitovanog signala mijenja, čime prenosi informaciju. Ovo je moguće postići sa nekoliko metoda, od kojih je najjednostavnija binarni PSK koji koristi dvije suprotne faze od 0\textdegree i 180\textdegree (slika \ref{BPSK}). U ovoj metodi, stanje svakog bita se poredi sa prethodnim te se tako na osnovu njihove (ne)jednakosti mijenja trenutni bit ili ostavlja istim. Postoje i kompleksnije metode koje uključuju faze od +90\textdegree, -90\textdegree ili čak i polovine svih dosadašnjih uglova.
+Phase-shift keying (PSK) je metoda digitalne komunikacije u kojoj se informacija prenosi promjenomg faze transmitovanog signala mijenja. Ovo je moguće postići sa nekoliko metoda, od kojih je najjednostavnija binarni PSK koji koristi dvije suprotne faze od 0\textdegree i 180\textdegree (slika \ref{BPSK}). U ovoj metodi, stanje svakog bita se poredi sa prethodnim te se tako na osnovu njihove (ne)jednakosti mijenja trenutni bit ili ostavlja istim. Postoje i kompleksnije metode koje uključuju faze od +90\textdegree, -90\textdegree ili čak i polovine svih dosadašnjih uglova\cite{psk}.
 \cFigure{HC-05_BPSK}{Binarni PSK\label{BPSK}}{0.8}
 
 \subsubsection{Enhanced Data Rate}
@@ -52,7 +52,7 @@ HC-05 na sebi ima BlueCore4 eksterni čip i na njemu se zasniva rad modula. Sa t
     \caption{HC-05 specifikacije}
 \end{table}
 
-\noindent Podržane brzine prenosa u bitovima po sekundi su: 9600,19200,38400,57600,115200,230400,460800. \\
+\noindent Podržane brzine prenosa u bitovima po sekundi su: 9600,19200,38400,57600,115200,230400,460800\cite{hcbt}. \\
 
 
 \begin{table}[h!]
@@ -69,7 +69,7 @@ HC-05 na sebi ima BlueCore4 eksterni čip i na njemu se zasniva rad modula. Sa t
 
 \noindent HC-05 također ima sposobnost pamćenja zadnjeg uvezanog uređaja, te automatsko povezivanje ukoliko isti bude pronađen pri paljenju.\\
 
-\noindent Standard na kojem se zasniva bežična komunikacija je IEE 802.15.1\footnote{http://www.ieee802.org/15/pub/TG1.html}
+\noindent Standard na kojem se zasniva bežična komunikacija je IEE 802.15.1\footnote{\url{http://www.ieee802.org/15/pub/TG1.html}}
 
 \subsection{Pinovi}
 HC-05 ukupno ima 6 pinova.
@@ -104,7 +104,7 @@ Kako bi mogli poslati ove komande uređaju, moramo se povezati na njega. To mož
                 Serial.write(Serial1.read());
             }
             \end{minted}
-    \caption{Serial passthrough}
+    \caption{Serial Passtrough}
 \end{code}
 
 Nakon što na Arduino pošaljemo ovu skicu, kroz Serial Monitor možemo slati komande direktno na HC-05.
@@ -139,7 +139,7 @@ Nakon što na Arduino pošaljemo ovu skicu, kroz Serial Monitor možemo slati ko
         AT+LINK=<Param>                   & Povezivanje s uređajem                    \\\hline
         AT+DISC                           & Prekid veze                               \\\hline
     \end{tabular}
-    \caption{Tabela AT komandi}
+    \caption{Tabela AT komandi\cite{hcbt}}
     \def\arraystretch{1}
 \end{table}
 

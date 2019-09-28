@@ -3,10 +3,10 @@
 
 \begin{document}
 \section{A4988} \label{acdoo}
-Upravljač motora A4988 je namijenjen za upravljanje bipolarnim koračnim motorima. Pomoću ovog uređaja, motoru motožemo dostaviti i do 2A po namotaju. Međutim, za jačinu struje se ne moramo previše brinuti jer A4988 ima ugrađenu zaštitu od prekomjerne jačine struje (eng. overcurrent protection).
+Upravljač motora A4988 je namijenjen za upravljanje bipolarnim koračnim motorima\cite{adriver}. Pomoću ovog uređaja, motoru motožemo dostaviti i do 2A po namotaju. Međutim, za jačinu struje se ne moramo previše brinuti jer A4988 ima ugrađenu zaštitu od prekomjerne jačine struje (eng. overcurrent protection).
 
 \subsection{Digitalno-analogni konverter}
-U elektronici se dizajneri često susreću sa situacijom da je iz digitalnog potrebno dobiti analogni signal. Ovaj problem se riješava koristeći digitalno-analogne konvertere (eng. Digital-to-analog converter, DAC)
+U elektronici se dizajneri često susreću sa situacijom da je iz digitalnog potrebno dobiti analogni signal. Ovaj problem se riješava koristeći digitalno-analogne konvertere (eng. Digital-to-analog converter, DAC)\cite{dac}.
 \cFigure{A4988_DAC}{8-bitni DAC}{0.7}
 
 DAC funkcioniše tako što konvertuje abstraktni broj konačne preciznosti u analogni signal čija je voltaža proporcionalna ulaznoj vrijednosti. Idealan DAC konvertuje abstraktni broj u niz impulsa, nakon čega se, koristći linearnu interpolaciju, popunjava signal između impulsa.
@@ -28,7 +28,7 @@ H-most ima dva moda u kojima prekidači mogu biti postavljeni, a to su brzo i sp
 \end{figure}
 
 \subsection{Miješano propadanje}
-U svakom koraku motora, protok struje se kontrolira koristeći vrijednost eksternih rezistora čija je uloga opažati ulazni protok struje, referentnu voltažu i izlaznu voltažu digitalno-analognog konvertera koja se kontroliše od strane translatora. Ukoliko je trenutni izlaz DAC-a u niži u odnosu na prošli, onda se mod aktivnog mosta postavlja na mod miješanog propadanja (jedno od svojstava A4988 čipa). Ukoliko je trenutni izlaz DAC-a viši, postavlja se na sporo propadanje. Ovo dinamično mijenjanje modova poboljšava performanse motora u vidu smanjenja distorzije talasa koji prenosi signal.
+U svakom koraku motora, protok struje se kontrolira koristeći vrijednost eksternih rezistora čija je uloga opažati ulazni protok struje, referentnu voltažu i izlaznu voltažu digitalno-analognog konvertera koja se kontroliše od strane translatora. Ukoliko je trenutni izlaz DAC-a u niži u odnosu na prošli, onda se mod aktivnog mosta postavlja na mod miješanog propadanja (jedno od svojstava A4988 čipa). Ukoliko je trenutni izlaz DAC-a viši, postavlja se na sporo propadanje. Ovo dinamično mijenjanje modova poboljšava performanse motora u vidu smanjenja distorzije talasa koji prenosi signal\cite{adriver}.
 
 \subsection{Pinovi} \label{apinovi}
 A4988 upravljač, na sebi ima 16 pinova:
@@ -55,7 +55,7 @@ A4988 upravljač, na sebi ima 16 pinova:
         V   & V   & V   & \sfrac{1}{16}                \\
         \hline
     \end{tabular}
-    \caption{Šabloni MS pinova}
+    \caption{Šabloni MS pinova\cite{adriver}}
 \end{table}
 
 \subparagraph{RESET} \noindent vraća translator na početno stanje. Dok je na njemu visoki nivo voltaže, svi ulazi se ignorišu.

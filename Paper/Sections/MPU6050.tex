@@ -4,10 +4,10 @@
 \begin{document}
 \section{MPU6050} \label{mpu}
 
-MPU6050 je uređaj koji služi za praćenje kretanja i orijentacije tijela na kojem se nalazi. Kombinacija žiroskopa i akcelerometra (koji imaju po 3 ose) sa Digital Motion Processor-om daje vrlo precizne podatke o trenutnom položaju uređaja.
+MPU6050 je uređaj koji služi za praćenje kretanja i orijentacije tijela na kojem se nalazi. Kombinacija žiroskopa i akcelerometra (koji imaju po 3 ose) sa Digital Motion Processor-om\cite{mpu} daje vrlo precizne podatke o trenutnom položaju uređaja.
 
 \subsection{Žiroskop}
-Žiroskop je uređaj koji, koristeći zemljinu gravitaciju, određuje sopstvenu orijentaciju. Sastavljen je od diska koji se vrti (rotora) i osnove na kojoj se disk nalazi na kojoj se također nalaze tri stacionarna prstena. Kada se orijentacija promijeni, zahvaljujući svojoj rotacionoj sili, rotor ostaje u istom orijentacionom odnosu sa zemljom, što omogućava očitavanje pomjeranja u odnosu na stacionarni dio uređaja oko žiroskopa.
+Žiroskop je uređaj koji, koristeći zemljinu gravitaciju, određuje sopstvenu orijentaciju. Sastavljen je od diska koji se vrti (rotora) i osnove na kojoj se disk nalazi, na kojoj se također nalaze tri stacionarna prstena. Kada se orijentacija promijeni, zahvaljujući svojoj rotacionoj sili, rotor ostaje u istom orijentacionom odnosu sa zemljom, što omogućava očitavanje pomjeranja u odnosu na stacionarni dio uređaja oko žiroskopa.
 
 \cFigure{MPU6050_Ziroskop}{Žiroskop}{0.7}
 
@@ -23,7 +23,7 @@ $$
 
 \subsection{Digital Motion Processing}\label{dmp}
 
-Digital Motion Processor (DMP) je interni proceseor koji se nalazi na MPU6050. Nažalost, ovaj procesor je zatvorenog koda i nije dokumentovan. Zbog toga se u Arduino projektima koristi biblioteka ``I2Cdevlib''\footnote{https://www.i2cdevlib.com/} koja je nstala kao proces reverznog inžinjeringa, biblioteke koja preuzima podatke iz DMP-a
+Digital Motion Processor (DMP) je interni proceseor koji se nalazi na MPU6050. Nažalost, ovaj procesor je zatvorenog koda i nije dokumentovan. Zbog toga se u Arduino projektima koristi biblioteka ``I2Cdevlib''\footnote{\url{https://www.i2cdevlib.com/}} koja je nstala kao proces reverznog inžinjeringa, biblioteke koja preuzima podatke iz DMP-a
 
 \subsubsection{Euluerovi uglovi}
 Eulerovi uglovi se koriste kako bi se predstavila orijentacija tijela u odnosu na fiksirani koordinatni sistem. Ovom metodom se utvrđuje rotacija tijela sa osama $x,y,z$ u tijelo $X,Y,Z$.Prvo je potrebno odrediti N-osu koja se dobija vektorskim proizvodom $N=Z \times Z$. Zatim se definišu uglovi:
@@ -121,7 +121,7 @@ Komunikacija ovog protokola se zasniva na slanju paketa. Veličina mu nije fiksn
 
 \cFigure{MPU6050_I2C-Paket}{Primjer {\itc} paketa}{1}
 
-\noindent Brzina ove komunikacije može biti između 100kbps i 5Mbps.\\
+\noindent Brzina ove komunikacije može biti između 100kbps i 5Mbps\cite{itc}.\\
 
 \noindent Najveća mana ovog protokola je ograničenje okvirnog podatka na 8 bita.
 
@@ -180,14 +180,5 @@ I2Cdevlib je biblioteka napisana u C++ programskom jeziku koja olakšava korišt
 \subparagraph{dmpGetQuaternion(\&q, packet)} \noindent pretvara podatke iz paketa packet u kvaternion rotacije i pohranjuje ih u objekt tipa quaternion q.
 
 \subparagraph{mpu.dmpGetEuler(euler, \&q)} \noindent vrši konverziju kvaterniona rotacije q u Eulerove uglove koje pohranjuje u niz od 3 float varijable euler($\alpha,\beta,\gamma$).
-
-
-
-
-
-
-
-
-
 
 \end{document}
