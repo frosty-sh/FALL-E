@@ -5,9 +5,11 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 % \usepackage[showframe]{geometry}
+\usepackage[backend=bibtex,citestyle=IEEE,style=numeric]{biblatex}
 \usepackage{geometry}
 \usepackage{layout}
 \usepackage{titlesec}
+\usepackage{thmtools}
 % \usepackage{subfiles}
 \usepackage[subpreambles=true]{standalone}
 \usepackage{import}
@@ -15,6 +17,7 @@
 \usepackage{tocloft}
 \usepackage[none]{hyphenat}
 \usepackage{amsmath}
+\usepackage{tocbasic}
 \usepackage{tcolorbox}
 \usepackage{etoolbox}
 \usepackage{setspace}
@@ -23,7 +26,7 @@
 \usepackage{xfrac}
 \usepackage{caption}
 \usepackage{hyperref}
-
+\addbibresource{Bibliography.bib}
 
 %Title and author
 \title{Samobalansirajući Robot}
@@ -49,6 +52,11 @@
 %TOC dots
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 
+%List of figures and tables
+\renewcommand{\listfigurename}{Slike}
+\renewcommand{\listtablename}{Tabele}
+
+
 %New page after section
 \let\oldsection\section
 \renewcommand\section{\clearpage\oldsection}
@@ -73,8 +81,17 @@
 
 
 %Code env
-\newenvironment{code}{\captionsetup{type=listing}}{}
-\SetupFloatingEnvironment{listing}{name=Primjer koda}
+% \newenvironment{code}{\captionsetup{type=listing}}{}
+% \SetupFloatingEnvironment{listing}{name=Primjer koda}
+
+\DeclareNewTOC[%
+  type=code,%
+  types=codes,% used in the \listof.. command
+  float,% define a floating environment
+  floattype=4,% see below
+  name=Primjer koda,%
+  listname={Primjeri koda}%
+]{lop}
 
 \begin{document}
 
@@ -113,5 +130,12 @@
 \import{Sections/}{Android}
 \import{Sections/}{Robot}
 \import{Sections/}{Zakljucak}
+
+\clearpage
+\listofcodes
+\listoftables
+\listoffigures
+
+\printbibliography[title={Literatura}]
 
 \end{document}
