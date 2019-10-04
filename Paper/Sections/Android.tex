@@ -3,17 +3,17 @@
 
 \begin{document}
 \section{Android aplikacija}
-U ovom dijelu će biti opisana Android aplikacija, koja je dio samog projekta samobalansirajućeg robota.
+U ovom dijelu će biti opisana Android aplikacija koja je dio samog projekta samobalansirajućeg robota.
 
 \subsection{Dizajn}
-Pošto će se robot moći kretati u 2 smjera i rotirati također u 2 smjera, mobilnu aplikaciju će činiti 4 dugmeta smještena na sredini ekrana.
+Obzirom da će se robot moći kretati u 2 smjera i rotirati, također, u 2 smjera, mobilnu aplikaciju će činiti 4 dugmeta smještena na sredini ekrana.
 
 \cFigure{Android_Dizajn}{Dizajn mobilne aplikacije u Adobe XD}{0.4}
 
 \noindent Dugmići inicijalno imaju postavljenu providnost na 50\%, a vidljivi su 100\% samo dok su pritisnuti.
 
 \subsubsection{GridLayout}
-Kako bi dizajn bio responsivan i proporcije ostale jednake na većim i manjim ekranima korišten je GridLayout. Kada se širina layout-a postavi na \verb|match_parent|, mreža će zauzeti širinu uređaja. U ovom slučaju nam je potrebno 3 kolone i 3 reda
+Kako bi dizajn bio responzivan i proporcije ostale jednake na većim i manjim ekranima korišten je GridLayout. Kada se širina layout-a postavi na \verb|match_parent|, mreža će zauzeti širinu uređaja. U ovom slučaju nam je potrebno 3 kolone i 3 reda
 
 \begin{table}[h]
     \centering
@@ -44,7 +44,7 @@ Kako bi dizajn bio responsivan i proporcije ostale jednake na većim i manjim ek
 \end{code}
 
 \subsubsection{ImageButton}
-ImageButton je zapravo obično dugme kojeg umjesto okvira i teksta u njemu vizuelno predstavlja slika. Kako bih napravio dizajnirani izgled, u odgovarajuće kolone i redove sam postavio ImageButton-e koji će služiti kao dugmad za upravljanje robotom.
+ImageButton je zapravo obično dugme kojeg umjesto okvira i teksta vizuelno predstavlja slika. Kako bih napravio dizajnirani izgled, u odgovarajuće kolone i redove sam postavio ImageButton-e koji će služiti kao dugmad za upravljanje robotom.
 
 \cFigure{Android_Dugmici}{ImageButton-i unutar GridLayout-a}{0.5}
 
@@ -100,10 +100,10 @@ S obzirom na to da će aplikacija sa robotom komunicirati putem bluetooth veze, 
 
 \paragraph{BluetoothSocket} je objekat koji predstavlja konekciju sa drugim uređajem. Pozivajući funkciju \verb|createInsecureRfcommSocketToServiceRecord| nad objektom uređaja kao rezultat ćemo dobiti BluetoothSocket objekat, nakon čega je potrebno pozvati \verb|connect| funkciju na socket objektom kako bi se veza između uređaja mogla uspostaviti. Svaki socket ima dva stream-a podataka: input i output stream. Iz input streama je moguće čitati podatke koji dolaze na adapter, dok se u output stream upisuju podaci koje želimo poslati povezaonm uređaju.
 
-\paragraph{ConnectionThread} je klasa koju sam napravio kako bih razdvojio bluetooth funkcionalnosti od UI thread-a. Kako bih ovo uradio, bilo je potrebno da ConnectionThread klasa naslijedi Thread roditeljsku klasu. Ova klasa kao parametar u konstruktoru pirma BluetoothSocket čiji outputstream onda smješta u svoju privatnu varijablu. Funkcija kojom se šalju podaci (write) na osnovu String inputa generiše niz byte-ova i koristeći \verb|write| nad socket objektom poruku šalje povezanom uređaju.
+\paragraph{ConnectionThread} je klasa koju sam napravio kako bih razdvojio bluetooth funkcionalnosti od UI thread-a. Kako bih ovo uradio, bilo je potrebno da ConnectionThread klasa naslijedi Thread roditeljsku klasu. Ova klasa kao parametar u konstruktoru prima BluetoothSocket čiji outputstream onda smiješta u svoju privatnu varijablu. Funkcija kojom se šalju podaci (write) na osnovu String inputa generiše niz byte-ova i, koristeći \verb|write| nad socket objektom, poruku šalje povezanom uređaju.
 
 \subsubsection{MainActivity}
-Aktivnost koja se pokreće pri praljenju aplikacije se naziva "MainActivity". Obzirom da je Java objekto orijentiran programski jezik, aktivnost je javna klasa koja nasljeđuje "AppCompatActivity" klasu.
+Aktivnost koja se pokreće pri paljenju aplikacije se naziva "MainActivity". Obzirom da je Java objektno orijentiran programski jezik, aktivnost je javna klasa koja nasljeđuje "AppCompatActivity" klasu.
 
 \begin{code}
     \begin{minted}[breaklines]{java}
@@ -121,11 +121,11 @@ Aktivnost koja se pokreće pri praljenju aplikacije se naziva "MainActivity". Ob
     \caption{SendSignal funkcija u MainActivity klasi}
 \end{code}
 
-\paragraph{onCreate} je funkcija za koju se očekuje da će biti override-ana od strane programera. Ona se poziva svakiu put kada se aktivnost kreira. Prvo što se treba uraditi unutar onCreate funkcije jeste odabir layout-a koji koristi ova aktivnost pomoću setContentView funkcije.
+\paragraph{onCreate} je funkcija za koju se očekuje da će biti override-ana od strane programera. Ona se poziva svaki put kada se aktivnost kreira. Prvo što se treba uraditi unutar onCreate funkcije jeste odabir layout-a koji koristi ova aktivnost pomoću setContentView funkcije.
 
 \paragraph{findViewById(id)} je funkcija koja vraća view objekat na osnovu njegovog id-a koji je postavljen unutar \verb|xml| datoteke.
 
-\paragraph{Eventi}  su objekti koji nastaju kada se desi promjena na korisničkom sučelju. Eventima se mogu dodijeliti funkcije koje će se izvršiti u trenutku kada se event dogodi. Ovi tipovi objekata se najčešće koriste zajedno sa eventListener objektima kojima se odabranim elementima korisničkog sučelja, pridodaju pojedini eventi. Kada se aktivira listener, unutar funkcije se može pristupiti dva objekta, view sa kojim je izvršena interakcija, i tip eventa koji se dogodio. \verb|setOnTouchListener| kao tip eventa može imati \verb|MotionEvent.ACTION_UP|, što označava da dugme više nije u pritisnutom stanju.
+\paragraph{Eventi}  su objekti koji nastaju kada se desi promjena na korisničkom sučelju. Eventima se mogu dodijeliti funkcije koje će se izvršiti u trenutku kada se event dogodi. Ovi tipovi objekata se najčešće koriste zajedno sa eventListener objektima kojima se odabranim elementima korisničkog sučelja pridodaju pojedini eventi. Kada se aktivira listener, unutar funkcije se može pristupiti dva objekta - view sa kojim je izvršena interakcija i tip eventa koji se dogodio. \verb|setOnTouchListener| kao tip eventa može imati \verb|MotionEvent.ACTION_UP|, što označava da dugme više nije u pritisnutom stanju.
 
 \begin{code}
     \begin{minted}[breaklines, tabsize=2]{java}

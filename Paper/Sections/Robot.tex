@@ -6,7 +6,7 @@
 Upoznavši se sa tehnologijama, komponentama, detaljnim opisom uređaja i PID kontrolerom u dosadašnjem dijelu rada, imamo sve informacjie o potrebama za pravljenje samobalansirajućeg robota.
 
 \subsection{Konstrukcija}
-Konstrukciju robota čine 3 pločice pleksiglasa koje su namontirane na 4 navojne šike. Ispod same konstrukcije se nalaze 2 koračna motora sa točkovima. Pločice su raspoređene u spratove. Na prvome se nalazi matador ploča sa komponentama, na drugom Arduino Mega kontroler i na trećem spratu se ne nalazi ništa, već je njegova svrha dodati visinu samom robotu.
+Konstrukciju robota čine 3 pločice pleksiglasa koje su namontirane na 4 navojne šipke. Ispod same konstrukcije se nalaze 2 koračna motora sa točkovima. Pločice su raspoređene u spratove. Na prvome se nalazi matador ploča sa komponentama, na drugom Arduino Mega kontroler i na trećem spratu se ne nalazi ništa, već je njegova svrha dodati visinu samom robotu.
 
 \subsubsection{Navojne šipke}
 Navojne šipke su podrška čitavog robota. Četiri šipke dužine po 21cm daju robotu visinu koja ga dovodi u stanje disbalansa. Debljina svake šipke iznosi 4mm. U dužini šipke može postojati greška jer su rezane ručno.
@@ -14,7 +14,7 @@ Navojne šipke su podrška čitavog robota. Četiri šipke dužine po 21cm daju 
 \cFigure{Robot_Navojna-Sipka}{Navojna šipka}{0.5}
 
 \subsubsection{Pleksiglas}
-Pločice pleksiglasa na gornja dva sprata robota su debljine 3mm, dok je na prvom spratu debljina pločice 5mm kako bi mogla podnijeti težinu motora i točkova. Sve tri pločice imaju četiri rupe širine 4mm na svojim krajevima sa namjenom da se kroz njih provuku navojne šipke. Ono što ploče drži u mjestu i onemogućava im klizanje niz navojne šipke, (osim samog trenja) su matice postavljene ispod i iznad svake rupe u pločici (ukupno 24 matice). Pored toga, na pločici koja se nalazi na prvom spratu su također zabušene rupe veličine 4mm kroz koje su na pločicu pričvršćeni L-profili koji sa svoje druge strane imaju pričvršćene koračne motore. Srednji sprat na sebi ima zabušene četiri rupe veličine 3mm kroz koje su provučeni šarafi čiji je zadatak da drže Arduino MEGA pločicu pričvršćenom na mjestu.
+Pločice pleksiglasa na gornja dva sprata robota su debljine 3mm, dok je na prvom spratu debljina pločice 5mm kako bi mogla podnijeti težinu motora i točkova. Sve tri pločice imaju četiri rupe širine 4mm na svojim krajevima, sa namjenom da se kroz njih provuku navojne šipke. Ono što ploče drži u mjestu i onemogućava im klizanje niz navojne šipke (osim samog trenja) su matice postavljene ispod i iznad svake rupe u pločici (ukupno 24 matice). Pored toga, na pločici koja se nalazi na prvom spratu su također zabušene rupe veličine 4mm kroz koje su na pločicu pričvršćeni L-profili koji sa svoje druge strane imaju pričvršćene koračne motore. Srednji sprat na sebi ima zabušene četiri rupe veličine 3mm kroz koje su provučeni šarafi čiji je zadatak da drže Arduino MEGA pločicu pričvršćenom na mjestu.
 
 \cFigure{Robot_Plexi}{Nacrt pleksiglas pločica sa rupama za navojne šipke}{0.8}
 
@@ -27,7 +27,7 @@ Točkovi koji se nalaze na koračnim motorima su plastični. Težina jednog toč
 Za ostvarivanje veze sa android aplikacijom korišten je HC-05 bluetooth modul (sekcija \ref{hc}). Pomoću AT komandi (sekcija \ref{hcat}), ime modula je postavljeno na "RobotBT" a lozinka na 1511. Također sam koristeći AT komande saznao MAC adresu modula te je unio kao predefinisanu vrijednost u procesu dobavaljanaj BluetoothDevice objekta u Android aplikaciji (sekcija \ref{btdev}). Pošto je na modulu uključena opcija automatskog konektovanja na posljednji uređaj, dok lozinka osigurava da je uređaj koji je zadnji povezan Android sa aplikacijom za upravljanje, pri paljenju robota se Android aplikacija i HC-05 povezuju automatski. Brzina prenosa podataka je 9600 bitova po sekundi. HC-05 je spojen na RX1 i TX1 pinove (sekcija \ref{arduinopinovi}).
 
 \subsubsection{Koračni motori}
-Koračni motori koje sam izabrao za ovaj projekt su Nema 17 motori. Dimenzije ovih motora su 43.18mm x 43.18mm  (to je 1.7 inch, odakle i potiče broj 17 u njiovom nazivu). Težina jednog motora je oko 250g. Na poleđini imaju 4 šarafa od kojih su 2 iskorištena kako bi se pričvrstili L-profil.
+Koračni motori koje sam izabrao za ovaj projekt su Nema 17 motori. Dimenzije ovih motora su 43.18mm x 43.18mm  (što je 1.7 inch, odakle i potiče broj 17 u njiovom nazivu). Težina jednog motora je oko 250g. Na poleđini imaju 4 šarafa od kojih su 2 iskorištena kako bi se pričvrstili L-profil.
 
 \cFigure{Robot_Nema17}{Nema 17 koračni motor}{0.7}
 
